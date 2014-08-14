@@ -1,0 +1,17 @@
+{
+    "name": "Salesforce New Tab Page",
+    "description": "[Unofficial] - Override the new tab page to access recent Salesforce and Chatter resources",
+    "version": "0.0.1",
+    "background": {
+        "scripts": ["./build/background.js"]
+    },
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    },
+    "permissions": [
+        "https://*.salesforce.com/",
+        "identity",
+        "storage"
+    ],
+    "manifest_version": 2
+}

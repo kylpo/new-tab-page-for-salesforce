@@ -1,0 +1,15 @@
+{
+  "name": "salesforce-new-tab-page",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "react": "^0.11.1",
+    "react-tools": "^0.11.1",
+    "salesforce-api-using-access-token": "^0.1.8",
+    "salesforce-chrome-oauth": "^0.1.3"
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.11.0",
+    "webpack": "^1.3.3-beta1"
+  }
+}

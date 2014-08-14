@@ -1,0 +1,7 @@
+.idea
+node_modules
+.project
+app.built.js
+background.built.js
+config.js
+build
