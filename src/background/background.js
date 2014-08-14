@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     console.error(err.message);
                     sendResponse(null);
                 } else {
-                    sendResponse(actions);
+                    sendResponse(recent);
                 }
             });
             return true;
@@ -78,38 +78,20 @@ function getRecent(callback) {
         return callback(null, localStateRecents);
     }
 
-    callback("nope");
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
 
-//    getConnection( function(err, connection) {
-//        if (err) {
-//            return callback(err);
-//        }
+        Api.getRecent(connection, function (err, data) {
+            if (err) {
+                return callback(err);
+            }
 
-//    Api.getRecent(function(err, data) {
-//        localStateRecents
-//    });
-
-//    Storage.getActions(function(err, actions) {
-//        if (err || actions === null) {
-//            getAndStoreActionsFromServer(function(err, actions) {
-//                if (err) {
-////                    return callback(err);
-//                    return callback(null, null);
-//                } else {
-//                    return callback(null, actions);
-//                }
-//            });
-//        } else {
-//            filterInitialActions(actions, function(err, filteredActions) {
-//                if (err) {
-//                    return callback(err);
-//                }
-//
-//                localStateRecents = filteredActions;
-//                return callback(null, filteredActions);
-//            });
-//        }
-//    });
+            localStateRecents = data;
+            callback(null, data);
+        });
+    });
 }
 
 /**
