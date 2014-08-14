@@ -1,0 +1,33 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    background-color: red;
+    height: 100%;
+}
+
+.centered {
+    background-color: blue;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    height: 300px;
+    width: 300px;
+    /*margin: 20px;*/
+}
+
+
+.appMode {
+    background-color: black;
+    height: 20px;
+}
+.searchBar {
+    background-color: green;
+    height: 20px;
+}
+.items {
+    background-color: yellow;
+    height: 20px;
+}
