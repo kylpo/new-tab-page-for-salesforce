@@ -36,7 +36,7 @@ html, body {
      height: 100%;
 }
 .wrapper.is-salesforce {
-    background-color: #344A5F;
+    background-color: #F0F1F2;
 }
 .wrapper.is-chatter {
     background-color: #CF5C60;
@@ -57,9 +57,10 @@ html, body {
 
 .appMode {
     list-style: none;
-    /*background-color: white;*/
     display: flex;
-    /*height: 20px;*/
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-padding-start: 0;
 }
 
 .Mode {
@@ -89,9 +90,11 @@ html, body {
     /*height: 20px;*/
 }
 .SearchBar-input {
-    height: 30px;
+    height: 34px;
     width: 94%;
     outline: none;
+    font-size: 18px;
+    padding: 0 10px;
 }
 .SearchBar-button {
     height: 36px;
@@ -104,6 +107,7 @@ html, body {
 }
 .items {
     background-color: yellow;
+    margin-top: 40px;
     height: 20px;
 }
 

@@ -8,6 +8,7 @@ var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
 var Storage = require("./storage.js");
 var Api = require("./api.js")(Auth.refreshToken, Storage.upsertConnection);
 var localStateRecents = null;
+var localStateMode = null;
 var localStateConnection = null;
 
 // This essentially acts as a dispatcher for what function to call
@@ -15,23 +16,27 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     // Note: 'return true' in each case where you want to use sendResponse asynchronously
     switch (request.type) {
-        case "getAppState":
+        case "getConnection":
             getConnection( function(err, connection) {
                 if (err) {
                     return sendResponse(null);
-//                    return callback(err);
                 }
 
-                Api.getRecent(connection, function (err, data) {
-                    if (err) {
-                        return sendResponse(null);
-//                        return callback(err);
-                    }
+                sendResponse(connection);
 
-//                    localStateRecents = data;
-                    return sendResponse({connection: connection, recent: data});
-//                    callback(null, data);
-                });
+//                Storage.getMode(function(err, connection) {
+//
+//                })
+//                Api.getRecent(connection, function (err, data) {
+//                    if (err) {
+//                        return sendResponse(null);
+////                        return callback(err);
+//                    }
+//
+////                    localStateRecents = data;
+//                    return sendResponse({connection: connection, recent: data});
+////                    callback(null, data);
+//                });
             });
 
 
@@ -43,6 +48,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 //                    sendResponse(recent);
 //                }
 //            });
+            return true;
+
+        case "getAppState":
+            getMode(function(err, mode) {
+                if (err) {
+                    return sendResponse(null);
+                }
+
+                sendResponse({mode: mode});
+            });
             return true;
 
         case "authorize":
@@ -63,6 +78,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     sendResponse();
                 })
             });
+            return true;
+
+        case "setMode":
+            console.log(request);
+            Storage.setMode(request.mode);
+            localStateMode = request.mode;
             return true;
 
         case "launchNewTab":
@@ -132,6 +153,30 @@ function getConnection(callback) {
         } else {
             localStateConnection = connection;
             return callback(null, connection);
+        }
+    });
+}
+
+/**
+ * First check if actions exist in state
+ * Then check if actions exist in storage
+ * - if taken from storage, filter actions
+ * Then finally try to get (and store) actions from server
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns actions in callback or an error callback
+ */
+function getMode(callback) {
+    if (localStateMode) {
+        return callback(null, localStateMode);
+    }
+
+    Storage.getMode(function(err, mode) {
+        if (err || mode === null) {
+            return callback(err);
+        } else {
+            localStateMode = mode;
+            return callback(null, mode);
         }
     });
 }

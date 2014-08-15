@@ -17,9 +17,13 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <div className="Authorize">
-                <button className="Authorize-button skin-Button is-active" onClick={this.handleClickAuthorize}>Authorize</button>
-                <p>(In popup window)</p>
+            <div className="wrapper">
+                <div className="centered">
+                    <div className="Authorize">
+                        <button className="Authorize-button skin-Button is-active" onClick={this.handleClickAuthorize}>Authorize</button>
+                        <p>(In popup window)</p>
+                    </div>
+                </div>
             </div>
             );
     }

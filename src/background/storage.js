@@ -47,3 +47,19 @@ exports.clearConnection = function(callback) {
         return callback();
     });
 };
+
+exports.getMode = function getMode(callback) {
+    chrome.storage.sync.get('mode', function (items) {
+        if (chrome.runtime.lastError) {
+            callback(new Error(chrome.runtime.lastError));
+        } else if (items && items.mode != null) {
+            callback(null, items.mode);
+        } else {
+            callback(new Error("Mode not found in chrome.storage.sync"));
+        }
+    });
+};
+
+exports.setMode = function setMode(mode) {
+    chrome.storage.sync.set({mode: mode});
+};
