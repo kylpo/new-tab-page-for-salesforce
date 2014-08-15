@@ -1,33 +1,121 @@
 html, body {
     height: 100%;
     margin: 0;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #293f54;
+}
+
+.skin-Button {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    border: 1px solid #dfe0e1;
+    color: #525354;
+    background-color: white;
+    padding: 7px;
+    margin: 5px 15px;
+    outline: none;
+    cursor: pointer;
+}
+.skin-Button:active {
+    background: #edeff0;
+}
+.skin-Button.is-active {
+    background: #2a94d6;
+    border-color: #2a94d6;
+    color: white;
+}
+.skin-Button.is-error:hover {
+    color: #CF5C60;
+}
+.skin-Button.is-active:active {
+    background: #1378b7;
 }
 
 .wrapper {
-    background-color: red;
-    height: 100%;
+     height: 100%;
+}
+.wrapper.is-salesforce {
+    background-color: #344A5F;
+}
+.wrapper.is-chatter {
+    background-color: #CF5C60;
+}
+.wrapper.is-google {
+    background-color: #F3AE4E;
 }
 
 .centered {
-    background-color: blue;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
-    height: 300px;
-    width: 300px;
+    max-height: 600px;
+    max-width: 600px;
     /*margin: 20px;*/
 }
 
 
 .appMode {
-    background-color: black;
-    height: 20px;
+    list-style: none;
+    /*background-color: white;*/
+    display: flex;
+    /*height: 20px;*/
 }
-.searchBar {
-    background-color: green;
-    height: 20px;
+
+.Mode {
+    flex-grow: 1;
+    /*height: 46px;*/
+    text-decoration: none;
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+.Mode-text {
+    padding: 10px;
+}
+.Mode-text.is-active {
+    border-bottom: 4px solid #2A94D6;
+}
+.Mode-text:hover {
+    border-bottom: 2px solid #2A94D6;
+}
+.Mode-text.is-active:hover {
+    border-bottom: 4px solid #2A94D6;
+}
+
+.SearchBar {
+    display: flex;
+    margin-top: 40px;
+    /*height: 20px;*/
+}
+.SearchBar-input {
+    height: 30px;
+    width: 94%;
+    outline: none;
+}
+.SearchBar-button {
+    height: 36px;
+    width: 6%;
+    background: #2A94D6;
+    border: none;
+    font-size: 20px;
+    color: white;
+    outline: none;
 }
 .items {
     background-color: yellow;
     height: 20px;
+}
+
+.Authorize {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding: 50px 0;
+    background-color: white;
+}
+
+.Authorize-button {
+    margin: 10px;
+    width: calc(50% - 20px);
 }

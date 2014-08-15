@@ -15,15 +15,34 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     // Note: 'return true' in each case where you want to use sendResponse asynchronously
     switch (request.type) {
-        case "getRecent":
-            getRecent(function(err, recent) {
+        case "getAppState":
+            getConnection( function(err, connection) {
                 if (err) {
-                    console.error(err.message);
-                    sendResponse(null);
-                } else {
-                    sendResponse(recent);
+                    return sendResponse(null);
+//                    return callback(err);
                 }
+
+                Api.getRecent(connection, function (err, data) {
+                    if (err) {
+                        return sendResponse(null);
+//                        return callback(err);
+                    }
+
+//                    localStateRecents = data;
+                    return sendResponse({connection: connection, recent: data});
+//                    callback(null, data);
+                });
             });
+
+
+//            getRecent(function(err, recent) {
+//                if (err) {
+//                    console.error(err.message);
+//                    sendResponse(null);
+//                } else {
+//                    sendResponse(recent);
+//                }
+//            });
             return true;
 
         case "authorize":

@@ -5,3 +5,6 @@ Salesforce-New-Tab-Page
 
 
 npm install salesforce-api-using-access-token@latest --save
+
+
+webpack --progress --colors --watch

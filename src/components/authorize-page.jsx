@@ -18,7 +18,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="Authorize">
-                <button className="AfterSubmit-button skin-Button is-active" onClick={this.handleClickAuthorize}>Authorize</button>
+                <button className="Authorize-button skin-Button is-active" onClick={this.handleClickAuthorize}>Authorize</button>
                 <p>(In popup window)</p>
             </div>
             );
