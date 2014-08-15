@@ -21,8 +21,9 @@ var App = React.createClass({
         };
     },
     handleModeChange: function(mode) {
-        this.setState({mode: mode});
-        chrome.runtime.sendMessage({type: 'setMode', mode: mode});
+        chrome.runtime.sendMessage({type: 'setModeAndGetItems', mode: mode}, function(items) {
+            this.setState({mode: mode, items: items});
+        }.bind(this));
 
     },
     handleSubmit: function(event, query) {
@@ -41,7 +42,6 @@ var App = React.createClass({
         }
     },
     render: function() {
-        console.log(this.state.mode);
         var wrapperClasses = cx({
             'wrapper': true,
             'is-salesforce': this.state.mode === SALESFORCE,
@@ -49,6 +49,7 @@ var App = React.createClass({
             'is-google': this.state.mode === GOOGLE
         });
 
+        console.log(this.state.items);
         return (
             <div className={wrapperClasses}>
                 <div className="centered">

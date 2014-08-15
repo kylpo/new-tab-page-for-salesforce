@@ -62,28 +62,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true;
 
-        case "setMode":
+        case "setModeAndGetItems":
+            getItems(request.mode, function(err, items) {
+                if (err) {
+                    return sendResponse(null);
+                }
+
+                sendResponse(items);
+            });
+
             Storage.setMode(request.mode);
             localStateMode = request.mode;
             return true;
-
-//        case "launchNewTab":
-//            launchNewTab(localStateConnection.instance_url + "/" + request.id);
-//            return true;
 
         default:
             break;
     }
 });
-
-//function launchNewTab(url) {
-//    // would like to use chrome.tabs.getCurrent, but this doesn't work in the background script
-//    chrome.tabs.query({active: true}, function(tabs) {
-//        var currentTab = tabs[0];
-//        //TODO , '"index": currentTab.index + 1' isn't consistently working. Sometimes it opens in position 1
-//        chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
-//    })
-//}
 
 /**
  * @param {string} mode
@@ -115,16 +110,10 @@ function getItems(mode, callback) {
 
         case 'chatter':
             callback('no');
-//            if (localStateRecents) {
-//                return callback(null, localStateRecents);
-//            }
             break;
 
         case 'google':
             callback('no');
-//            if (localStateRecents) {
-//                return callback(null, localStateRecents);
-//            }
             break;
     }
 }
@@ -132,7 +121,6 @@ function getItems(mode, callback) {
 /**
  * First check if connection exist in state
  * Then check if connection exist in storage
- * Then finally authorize with server to establish connection
  *
  * @param {function(Object, Object=)} callback
  * @returns connection in callback or an error callback
