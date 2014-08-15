@@ -97,18 +97,17 @@ html, body {
     padding: 0 10px;
 }
 .SearchBar-button {
-    height: 36px;
+    height: 38px;
     width: 6%;
     background: #2A94D6;
     border: none;
-    font-size: 20px;
+    font-size: 18px;
     color: white;
     outline: none;
+    cursor: pointer;
 }
 .items {
-    background-color: yellow;
     margin-top: 40px;
-    height: 20px;
 }
 
 .Authorize {

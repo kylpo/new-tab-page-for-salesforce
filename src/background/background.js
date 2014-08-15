@@ -56,7 +56,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                sendResponse({mode: mode});
+                getItems(function(err, items) {
+                    if (err) {
+                        return sendResponse({mode: mode});
+                    }
+
+                    sendResponse({mode: mode, items: items});
+                });
             });
             return true;
 
@@ -81,28 +87,27 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return true;
 
         case "setMode":
-            console.log(request);
             Storage.setMode(request.mode);
             localStateMode = request.mode;
             return true;
 
-        case "launchNewTab":
-            launchNewTab(localStateConnection.instance_url + "/" + request.id);
-            return true;
+//        case "launchNewTab":
+//            launchNewTab(localStateConnection.instance_url + "/" + request.id);
+//            return true;
 
         default:
             break;
     }
 });
 
-function launchNewTab(url) {
-    // would like to use chrome.tabs.getCurrent, but this doesn't work in the background script
-    chrome.tabs.query({active: true}, function(tabs) {
-        var currentTab = tabs[0];
-        //TODO , '"index": currentTab.index + 1' isn't consistently working. Sometimes it opens in position 1
-        chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
-    })
-}
+//function launchNewTab(url) {
+//    // would like to use chrome.tabs.getCurrent, but this doesn't work in the background script
+//    chrome.tabs.query({active: true}, function(tabs) {
+//        var currentTab = tabs[0];
+//        //TODO , '"index": currentTab.index + 1' isn't consistently working. Sometimes it opens in position 1
+//        chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
+//    })
+//}
 
 /**
  * First check if actions exist in state
@@ -113,7 +118,7 @@ function launchNewTab(url) {
  * @param {function(Object, Object=)} callback
  * @returns actions in callback or an error callback
  */
-function getRecent(callback) {
+function getItems(callback) {
     if (localStateRecents) {
         return callback(null, localStateRecents);
     }

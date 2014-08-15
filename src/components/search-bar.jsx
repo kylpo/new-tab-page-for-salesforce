@@ -19,7 +19,7 @@ var SearchBar = React.createClass({
     render: function() {
         return (
             <form className="SearchBar" onSubmit={this.handleSubmit}>
-                <input className="SearchBar-input" aria-hidden="true" autocomplete="off" value={this.state.value} onChange={this.handleChange}/>
+                <input className="SearchBar-input" aria-hidden="true" autoComplete="off" value={this.state.value} onChange={this.handleChange}/>
                 <button className="SearchBar-button" type="submit"><i className="fa fa-search"></i></button>
             </form>
             );

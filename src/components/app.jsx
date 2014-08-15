@@ -54,15 +54,15 @@ var App = React.createClass({
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar onSubmit={this.handleSubmit}/>
-                    <Items/>
+                    <Items items={this.state.items}/>
                 </div>
             </div>
             );
     }
 });
 
-chrome.runtime.sendMessage({type: "getConnection"}, function(response) {
-    if (response === null) {
+chrome.runtime.sendMessage({type: "getConnection"}, function(connection) {
+    if (connection == null) {
         React.renderComponent(<AuthorizePage/>, document.body);
     } else {
         chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
@@ -74,8 +74,9 @@ chrome.runtime.sendMessage({type: "getConnection"}, function(response) {
                 items = response.items;
             }
 
+            console.log(connection);
             React.renderComponent(
-                <App instanceUrl={response.instance_url} initialMode={mode} initialItems={items}/>, document.body
+                <App instanceUrl={connection.instance_url} initialMode={mode} initialItems={items}/>, document.body
             );
         });
     }

@@ -5,22 +5,18 @@
 var React = require("react");
 
 var Items = React.createClass({
-    getInitialState: function() {
-        return {
-            flipped: false,
-            unflipped: false,
-            selectedAction: null
-        }
-    },
-    componentDidMount: function() {
-
-    },
-    componentWillUnmount: function() {
-
-    },
     render: function() {
+        var items = [];
+
+        if (this.props.items != null) {
+            this.props.items.forEach(function (item) {
+                items.push(<div>{item.Name}</div>);
+            });
+        }
+
         return (
             <div className="items">
+            {items}
             </div>
             );
     }
