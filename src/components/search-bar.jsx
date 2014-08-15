@@ -2,7 +2,12 @@
 
 'use strict';
 
-var React = require("react");
+var React = require("react/addons");
+var cx = React.addons.classSet;
+
+var SALESFORCE = "salesforce";
+var CHATTER = "chatter";
+var GOOGLE = "google";
 
 var SearchBar = React.createClass({
     getInitialState: function() {
@@ -17,10 +22,17 @@ var SearchBar = React.createClass({
         this.props.onSubmit(e, this.state.value);
     },
     render: function() {
+        var buttonClasses = cx({
+            'SearchBar-button': true,
+            'is-salesforce': this.props.mode === SALESFORCE,
+            'is-chatter': this.props.mode === CHATTER,
+            'is-google': this.props.mode === GOOGLE
+        });
+
         return (
             <form className="SearchBar" onSubmit={this.handleSubmit}>
                 <input className="SearchBar-input" aria-hidden="true" autoComplete="off" value={this.state.value} onChange={this.handleChange}/>
-                <button className="SearchBar-button" type="submit"><i className="fa fa-search"></i></button>
+                <button className={buttonClasses} type="submit"><i className="fa fa-search"></i></button>
             </form>
             );
     }

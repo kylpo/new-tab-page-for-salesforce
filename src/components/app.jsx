@@ -53,7 +53,7 @@ var App = React.createClass({
             <div className={wrapperClasses}>
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
-                    <SearchBar onSubmit={this.handleSubmit}/>
+                    <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
                     <Items items={this.state.items}/>
                 </div>
             </div>

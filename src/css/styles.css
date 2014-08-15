@@ -36,13 +36,16 @@ html, body {
      height: 100%;
 }
 .wrapper.is-salesforce {
-    background-color: #F0F1F2;
+    /*background-color: #F0F1F2;*/
+    background-color: white;
 }
 .wrapper.is-chatter {
-    background-color: #CF5C60;
+    /*background-color: #CF5C60;*/
+    background-color: white;
 }
 .wrapper.is-google {
-    background-color: #F3AE4E;
+    /*background-color: #F3AE4E;*/
+    background-color: white;
 }
 
 .centered {
@@ -73,15 +76,30 @@ html, body {
 }
 .Mode-text {
     padding: 10px;
+    opacity: 0.2;
 }
 .Mode-text.is-active {
-    border-bottom: 4px solid #2A94D6;
+    border-bottom: 4px solid;
+    opacity: 1;
 }
 .Mode-text:hover {
-    border-bottom: 2px solid #2A94D6;
+    border-bottom: 4px solid;
 }
-.Mode-text.is-active:hover {
-    border-bottom: 4px solid #2A94D6;
+
+.Mode-text.is-salesforce.is-active,
+.Mode-text.is-salesforce.is-active:hover,
+.Mode-text.is-salesforce:hover {
+    border-color: #2A94D6;
+}
+.Mode-text.is-chatter.is-active,
+.Mode-text.is-chatter.is-active:hover,
+.Mode-text.is-chatter:hover {
+    border-color: #4EB1CB;
+}
+.Mode-text.is-google.is-active,
+.Mode-text.is-google.is-active:hover,
+.Mode-text.is-google:hover {
+    border-color: #F3AE4E;
 }
 
 .SearchBar {
@@ -99,13 +117,22 @@ html, body {
 .SearchBar-button {
     height: 38px;
     width: 6%;
-    background: #2A94D6;
     border: none;
     font-size: 18px;
     color: white;
     outline: none;
     cursor: pointer;
 }
+.SearchBar-button.is-salesforce {
+    background: #2A94D6;
+}
+.SearchBar-button.is-chatter {
+    background: #4EB1CB;
+}
+.SearchBar-button.is-google {
+    background: #F3AE4E;
+}
+
 .items {
     margin-top: 40px;
 }

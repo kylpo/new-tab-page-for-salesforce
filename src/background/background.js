@@ -23,31 +23,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 }
 
                 sendResponse(connection);
-
-//                Storage.getMode(function(err, connection) {
-//
-//                })
-//                Api.getRecent(connection, function (err, data) {
-//                    if (err) {
-//                        return sendResponse(null);
-////                        return callback(err);
-//                    }
-//
-////                    localStateRecents = data;
-//                    return sendResponse({connection: connection, recent: data});
-////                    callback(null, data);
-//                });
             });
-
-
-//            getRecent(function(err, recent) {
-//                if (err) {
-//                    console.error(err.message);
-//                    sendResponse(null);
-//                } else {
-//                    sendResponse(recent);
-//                }
-//            });
             return true;
 
         case "getAppState":
@@ -56,7 +32,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                getItems(function(err, items) {
+                getItems(mode, function(err, items) {
                     if (err) {
                         return sendResponse({mode: mode});
                     }
@@ -79,10 +55,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "logout":
             Storage.clearConnection(function() {
                 localStateConnection = null;
-                Storage.clearActions(function() {
-                    localStateRecents = null;
-                    sendResponse();
-                })
+//                Storage.clearActions(function() {
+//                    localStateRecents = null;
+//                    sendResponse();
+//                })
             });
             return true;
 
@@ -110,33 +86,47 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 //}
 
 /**
- * First check if actions exist in state
- * Then check if actions exist in storage
- * - if taken from storage, filter actions
- * Then finally try to get (and store) actions from server
- *
+ * @param {string} mode
  * @param {function(Object, Object=)} callback
  * @returns actions in callback or an error callback
  */
-function getItems(callback) {
-    if (localStateRecents) {
-        return callback(null, localStateRecents);
-    }
-
-    getConnection( function(err, connection) {
-        if (err) {
-            return callback(err);
-        }
-
-        Api.getRecent(connection, function (err, data) {
-            if (err) {
-                return callback(err);
+function getItems(mode, callback) {
+    switch (mode) {
+        case 'salesforce':
+            if (localStateRecents) {
+                return callback(null, localStateRecents);
             }
 
-            localStateRecents = data;
-            callback(null, data);
-        });
-    });
+            getConnection(function (err, connection) {
+                if (err) {
+                    return callback(err);
+                }
+
+                Api.getRecent(connection, function (err, data) {
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    localStateRecents = data;
+                    callback(null, data);
+                });
+            });
+            break;
+
+        case 'chatter':
+            callback('no');
+//            if (localStateRecents) {
+//                return callback(null, localStateRecents);
+//            }
+            break;
+
+        case 'google':
+            callback('no');
+//            if (localStateRecents) {
+//                return callback(null, localStateRecents);
+//            }
+            break;
+    }
 }
 
 /**
