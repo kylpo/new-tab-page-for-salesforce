@@ -113,6 +113,16 @@ html, body {
     outline: none;
     font-size: 18px;
     padding: 0 10px;
+    border: 2px solid;
+}
+.SearchBar-input.is-salesforce {
+    border-color: #2A94D6;
+}
+.SearchBar-input.is-chatter {
+    border-color: #4EB1CB;
+}
+.SearchBar-input.is-google {
+    border-color: #F3AE4E;
 }
 .SearchBar-button {
     height: 38px;

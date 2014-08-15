@@ -22,6 +22,12 @@ var SearchBar = React.createClass({
         this.props.onSubmit(e, this.state.value);
     },
     render: function() {
+        var inputClasses = cx({
+            'SearchBar-input': true,
+            'is-salesforce': this.props.mode === SALESFORCE,
+            'is-chatter': this.props.mode === CHATTER,
+            'is-google': this.props.mode === GOOGLE
+        });
         var buttonClasses = cx({
             'SearchBar-button': true,
             'is-salesforce': this.props.mode === SALESFORCE,
@@ -31,7 +37,7 @@ var SearchBar = React.createClass({
 
         return (
             <form className="SearchBar" onSubmit={this.handleSubmit}>
-                <input className="SearchBar-input" aria-hidden="true" autoComplete="off" value={this.state.value} onChange={this.handleChange}/>
+                <input className={inputClasses} aria-hidden="true" autoComplete="off" value={this.state.value} onChange={this.handleChange}/>
                 <button className={buttonClasses} type="submit"><i className="fa fa-search"></i></button>
             </form>
             );
