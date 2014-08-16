@@ -21,28 +21,28 @@ var AppModePicker = React.createClass({
     },
     render: function() {
         var salesforceClasses = cx({
-            "Mode-text": true,
+            "Mode": true,
             "is-salesforce": true,
             "is-active": this.props.mode === SALESFORCE
         });
 
         var chatterClasses = cx({
-            "Mode-text": true,
+            "Mode": true,
             "is-chatter": true,
             "is-active": this.props.mode === CHATTER
         });
 
         var googleClasses = cx({
-            "Mode-text": true,
+            "Mode": true,
             "is-google": true,
             "is-active": this.props.mode === GOOGLE
         });
 
         return (
             <ul className="appMode">
-                <li className="Mode" onClick={this.handleClickSalesforce} title="Salesforce"><span className={salesforceClasses}>Salesforce</span></li>
-                <li className="Mode" onClick={this.handleClickChatter} title="Chatter"><span className={chatterClasses}>Chatter</span></li>
-                <li className="Mode" onClick={this.handleClickGoogle} title="Google"><span className={googleClasses}>Google</span></li>
+                <li className={salesforceClasses} onClick={this.handleClickSalesforce} title={SALESFORCE}><span className="Mode-text">{SALESFORCE}</span></li>
+                <li className={chatterClasses} onClick={this.handleClickChatter} title={CHATTER}><span className="Mode-text">{CHATTER}</span></li>
+                <li className={googleClasses} onClick={this.handleClickGoogle} title={GOOGLE}><span className="Mode-text">{GOOGLE}</span></li>
             </ul>
             );
     }
