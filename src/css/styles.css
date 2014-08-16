@@ -67,7 +67,7 @@ html, body {
 }
 
 .Item {
-    color: #ccc;
+    color: #666;
     margin: 20px 10px;
 
     -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
@@ -76,7 +76,10 @@ html, body {
 .Item:hover {
     cursor: pointer;
     /*color: #F3AE4E;*/
-    color: #666;
+    /*color: #666;*/
+
+    -webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.6);
 }
 .Item:hover .ItemText{
 
@@ -89,17 +92,18 @@ html, body {
     /*color: blue;*/
     color: #F3AE4E;
 }
-.Item:hover .Item-icon {
-    opacity: 1;
-    /*color: white;*/
-    /*color: #666;*/
-}
+
 .Item-icon {
     display: inline-block;
     width: 32px;
     height: 34px;
     opacity: 0.5;
     /*border: 1px solid;*/
+}
+.Item:hover .Item-icon {
+    opacity: 1;
+    /*color: white;*/
+    /*color: #666;*/
 }
 .ItemIcon-img {
     margin: 9px 8px;
