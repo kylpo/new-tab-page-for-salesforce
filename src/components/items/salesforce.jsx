@@ -4,7 +4,7 @@
 
 var React = require("react");
 
-var Items = React.createClass({
+var SalesforceItems = React.createClass({
     render: function() {
         var items = [];
 
@@ -22,4 +22,4 @@ var Items = React.createClass({
     }
 });
 
-module.exports = Items;
+module.exports = SalesforceItems;

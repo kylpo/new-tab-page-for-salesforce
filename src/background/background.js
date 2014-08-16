@@ -109,11 +109,15 @@ function getItems(mode, callback) {
             break;
 
         case 'chatter':
+
             callback('no');
             break;
 
         case 'google':
-            callback('no');
+            chrome.topSites.get(function(mostVisitedURLs) {
+                console.log(mostVisitedURLs);
+                callback(null, mostVisitedURLs);
+            });
             break;
     }
 }

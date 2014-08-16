@@ -7,7 +7,9 @@ var cx = React.addons.classSet;
 var AuthorizePage = require('./authorize-page.jsx');
 var AppModePicker = require('./app-mode-picker.jsx');
 var SearchBar = require('./search-bar.jsx');
-var Items = require('./items.jsx');
+var SalesforceItems = require('./items/salesforce.jsx');
+//var RecentChatter = require('./items/chatter.jsx');
+var GoogleItems = require('./items/google.jsx');
 
 var SALESFORCE = "salesforce";
 var CHATTER = "chatter";
@@ -49,13 +51,23 @@ var App = React.createClass({
             'is-google': this.state.mode === GOOGLE
         });
 
+        var items;
+
+        if (this.state.mode === SALESFORCE) {
+            items = <SalesforceItems items={this.state.items}/>;
+        } else if (this.state.mode === CHATTER) {
+
+        } else if (this.state.mode === GOOGLE) {
+            items = <GoogleItems items={this.state.items}/>;
+        }
+
         console.log(this.state.items);
         return (
             <div className={wrapperClasses}>
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
-                    <Items items={this.state.items}/>
+                {items}
                 </div>
             </div>
             );

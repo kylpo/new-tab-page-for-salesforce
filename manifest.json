@@ -1,6 +1,6 @@
 {
     "name": "[Unofficial] Salesforce New Tab Page",
-    "description": "Override the new tab page to access recent Salesforce and Chatter resources",
+    "description": "Override the new tab page to access items Salesforce and Chatter resources",
     "version": "0.0.1",
     "background": {
         "scripts": ["./build/background.js"]
@@ -11,6 +11,7 @@
     "permissions": [
         "https://*.salesforce.com/",
         "identity",
+        "topSites",
         "storage"
     ],
     "manifest_version": 2
