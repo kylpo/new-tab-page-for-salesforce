@@ -66,6 +66,32 @@ html, body {
     -webkit-padding-start: 0;
 }
 
+.GoTo {
+    text-align: center;
+    margin-top: 40px;
+}
+.GoTo-button {
+    color: #ccc;
+    border: 1px solid;
+    font-size: 14px;
+    outline: none;
+    padding: 5px;
+    background: none;
+}
+.GoTo-button:hover {
+    cursor: pointer;
+}
+.is-salesforce .GoTo-button:hover {
+    color: #2A94D6;
+}
+.is-chatter .GoTo-button:hover {
+    color: #4EB1CB;
+}
+.is-google .GoTo-button:hover {
+    color: #F3AE4E;
+}
+
+
 .Items {
     margin-top: 40px;
 }
@@ -88,17 +114,16 @@ html, body {
     /*font-weight: bold;*/
 /*}*/
 
-.items.is-google .Item:hover .ItemText {
+.is-google .Item:hover .ItemText {
     color: #F3AE4E;
 }
-.items.is-google .Item:hover .ItemText-description {
+.is-google .Item:hover .ItemText-description {
     color: #F3AE4E;
 }
-.items.is-salesforce .Item:hover .ItemText {
+.is-salesforce .Item:hover .ItemText {
     color: #2A94D6;
-
 }
-.items.is-salesforce .Item:hover .ItemText-description {
+.is-salesforce .Item:hover .ItemText-description {
     color: #2A94D6;
 }
 
@@ -142,6 +167,9 @@ html, body {
 
 .Mode {
     flex-grow: 1;
+    /*margin: 0 2px;*/
+    /*width: calc(33% - 4px);*/
+    width: 33%;
     padding-bottom: 10px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
@@ -155,10 +183,20 @@ html, body {
 .Mode.is-active {
     color: #666;
 }
+.Mode:hover {
+    margin: 0 2px;
+    width: calc(33% - 4px);
+}
+.Mode.is-active:hover {
+    margin: 0;
+    width: 33%;
+}
 
 .Mode.is-salesforce:hover {
     color: #2A94D6;
     border-bottom: 4px solid #2A94D6;
+
+
 }
 .Mode.is-salesforce.is-active,
 .Mode.is-salesforce.is-active:hover {
@@ -230,7 +268,7 @@ html, body {
     margin: 0 5px;
 }
 .Post-message {
-    margin: 10px;
+    margin: 15px;
 }
 
 .SearchBar {

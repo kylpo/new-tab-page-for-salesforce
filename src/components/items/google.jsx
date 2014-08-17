@@ -4,6 +4,7 @@
 
 var React = require("react");
 var ListItem = require("./list-item.jsx");
+var GoTo = require("./go-to.jsx");
 
 var GoogleItems = React.createClass({
     render: function() {
@@ -30,6 +31,7 @@ var GoogleItems = React.createClass({
         return (
             <div className="Items is-google">
             {items}
+                <GoTo target="Google" url='https://www.google.com'/>
             </div>
             );
     }

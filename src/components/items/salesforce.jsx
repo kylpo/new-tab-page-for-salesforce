@@ -4,6 +4,7 @@
 
 var React = require("react");
 var ListItem = require("./list-item.jsx");
+var GoTo = require("./go-to.jsx");
 
 var SalesforceItems = React.createClass({
     render: function() {
@@ -26,6 +27,7 @@ var SalesforceItems = React.createClass({
         return (
             <div className="Items is-salesforce">
             {items}
+                <GoTo target="Salesforce" url={this.props.host + '/home/home.jsp'}/>
             </div>
             );
 

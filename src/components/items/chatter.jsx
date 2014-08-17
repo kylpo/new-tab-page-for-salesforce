@@ -4,6 +4,7 @@
 
 var React = require("react");
 var PostItem = require("./post-item.jsx");
+var GoTo = require("./go-to.jsx");
 
 var ChatterItems = React.createClass({
     render: function() {
@@ -13,13 +14,14 @@ var ChatterItems = React.createClass({
             this.props.items.every(function(item, index) {
                 items.push(<PostItem id={item.id} post={item} url={this.props.host + '/' + item.id}/>);
 
-                return index < 3;
+                return index < 2;
             }.bind(this));
         }
 
         return (
             <div className="Items is-chatter">
             {items}
+                <GoTo target="Chatter" url={this.props.host + '/_ui/core/chatter/ui/ChatterPage'}/>
             </div>
             );
     }
