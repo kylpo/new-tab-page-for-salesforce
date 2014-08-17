@@ -28,7 +28,7 @@ var GoogleItems = React.createClass({
         }
 
         return (
-            <div className="items is-google">
+            <div className="Items is-google">
             {items}
             </div>
             );

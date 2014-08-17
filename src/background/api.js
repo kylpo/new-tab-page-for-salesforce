@@ -31,5 +31,9 @@ module.exports = function(refreshToken, upsertConnection) {
         apiCallWithRetryAndRefreshToken(Api.getRecent, [connection], callback);
     };
 
+    module.getPosts = function getPosts(connection, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getFeed, [connection, null], callback);
+    };
+
     return module;
 };

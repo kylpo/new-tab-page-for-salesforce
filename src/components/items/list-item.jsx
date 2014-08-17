@@ -6,10 +6,8 @@ var React = require("react");
 
 var ListItem = React.createClass({
     render: function() {
-        console.log(this.props);
-//        <span src={this.props.iconUrl}/>
         return (
-            <a href={this.props.url}>
+            <a className="ItemLink" href={this.props.url}>
                 <div className="Item">
                     <div className="Item-icon">
                         <img className="ItemIcon-img" src={this.props.iconUrl}/>

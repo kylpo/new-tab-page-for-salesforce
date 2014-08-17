@@ -8,7 +8,7 @@ var AuthorizePage = require('./authorize-page.jsx');
 var AppModePicker = require('./app-mode-picker.jsx');
 var SearchBar = require('./search-bar.jsx');
 var SalesforceItems = require('./items/salesforce.jsx');
-//var RecentChatter = require('./items/chatter.jsx');
+var ChatterItems = require('./items/chatter.jsx');
 var GoogleItems = require('./items/google.jsx');
 
 var SALESFORCE = "salesforce";
@@ -56,7 +56,7 @@ var App = React.createClass({
         if (this.state.mode === SALESFORCE) {
             items = <SalesforceItems host={this.props.instanceUrl} items={this.state.items}/>;
         } else if (this.state.mode === CHATTER) {
-
+            items = <ChatterItems host={this.props.instanceUrl} items={this.state.items}/>;
         } else if (this.state.mode === GOOGLE) {
             items = <GoogleItems items={this.state.items}/>;
         }

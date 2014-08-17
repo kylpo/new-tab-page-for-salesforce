@@ -109,8 +109,20 @@ function getItems(mode, callback) {
             break;
 
         case 'chatter':
+            getConnection(function (err, connection) {
+                if (err) {
+                    return callback(err);
+                }
 
-            callback('no');
+                Api.getPosts(connection, function (err, data) {
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    console.log(data);
+                    callback(null, data.items);
+                });
+            });
             break;
 
         case 'google':

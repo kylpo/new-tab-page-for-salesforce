@@ -24,7 +24,7 @@ var SalesforceItems = React.createClass({
         }
 
         return (
-            <div className="items is-salesforce">
+            <div className="Items is-salesforce">
             {items}
             </div>
             );
