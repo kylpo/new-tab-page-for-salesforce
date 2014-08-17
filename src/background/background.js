@@ -83,7 +83,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
 
             Storage.setMode(request.mode);
-//            localStateMode = request.mode;
             return true;
 
         default:
@@ -114,7 +113,6 @@ function getItems(mode, callback) {
 
 function getSalesforceItems(callback) {
     if (recentsCache) {
-//        console.log('recentsCache');
         return callback(null, recentsCache);
     }
 
@@ -128,13 +126,11 @@ function getSalesforceItems(callback) {
                 return callback(err);
             }
 
-//            console.log('recents api');
             callback(null, data);
 
             // cache results for 30 seconds
             recentsCache = data;
             setTimeout(function() {
-//                console.log('recents timeout');
                 recentsCache = null;
             },30000);
         });
@@ -143,7 +139,6 @@ function getSalesforceItems(callback) {
 
 function getChatterItems(callback) {
     if (chatterCache) {
-//        console.log('chatterCache');
         return callback(null, chatterCache);
     }
 
@@ -158,12 +153,10 @@ function getChatterItems(callback) {
             }
 
             callback(null, data.items);
-//            console.log('chatter api');
 
             // cache results for 30 seconds
             chatterCache = data.items;
             setTimeout(function() {
-//                console.log('chatter timeout');
                 chatterCache = null;
             },30000);
         });
@@ -172,19 +165,15 @@ function getChatterItems(callback) {
 
 function getGoogleItems(callback) {
     if (topSitesCache) {
-//        console.log('googleCache');
         return callback(null, topSitesCache);
     }
 
     chrome.topSites.get(function(mostVisitedURLs) {
         callback(null, mostVisitedURLs);
 
-//        console.log('google api');
-
         // cache results for 60 seconds
         topSitesCache = mostVisitedURLs;
         setTimeout(function() {
-//            console.log('google timeout');
             chatterCache = null;
         },60000);
     });
@@ -251,7 +240,6 @@ function getAndStoreConnection(callback) {
         }
 
         Storage.upsertConnection(connection, function() {
-//            localStateConnection = connection;
             callback(null, connection);
         });
     });
