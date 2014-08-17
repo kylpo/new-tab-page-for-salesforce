@@ -11,8 +11,7 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options, function() {
-            window.close();
-            //TODO: reload
+            window.location.reload();
         });
     },
     render: function() {

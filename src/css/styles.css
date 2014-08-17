@@ -6,7 +6,7 @@ html, body {
 }
 
 .skin-Button {
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     font-size: 16px;
     font-weight: 700;
     border: 1px solid #dfe0e1;
@@ -58,12 +58,26 @@ html, body {
 }
 
 
-.appMode {
+.AppMode {
     list-style: none;
     display: flex;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     -webkit-padding-start: 0;
+}
+
+
+.Authorize {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding: 50px 0;
+    background-color: white;
+}
+
+.Authorize-button {
+    margin: 10px;
+    width: calc(50% - 20px);
 }
 
 .GoTo {
@@ -110,9 +124,6 @@ html, body {
 .Item:hover .Item-icon {
     opacity: 1;
 }
-/*.Item:hover .ItemText-title {*/
-    /*font-weight: bold;*/
-/*}*/
 
 .is-google .Item:hover .ItemText {
     color: #F3AE4E;
@@ -165,10 +176,23 @@ html, body {
     font-size: 12px;
 }
 
+.Logout {
+    color: #ccc;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    padding: 5px;
+    margin: 10px;
+    background: none;
+    float: right;
+}
+.Logout:hover {
+    cursor: pointer;
+    color: #CF5C60;
+}
+
 .Mode {
     flex-grow: 1;
-    /*margin: 0 2px;*/
-    /*width: calc(33% - 4px);*/
     width: 33%;
     padding-bottom: 10px;
     border-bottom: 1px solid #ccc;
@@ -227,7 +251,7 @@ html, body {
 .Post {
     margin: 20px 0;
     color: #666;
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 .Post:hover {
     color: #4EB1CB;
@@ -317,16 +341,3 @@ html, body {
 }
 
 
-
-.Authorize {
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    padding: 50px 0;
-    background-color: white;
-}
-
-.Authorize-button {
-    margin: 10px;
-    width: calc(50% - 20px);
-}

@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 localStateConnection = null;
 //                Storage.clearActions(function() {
 //                    localStateRecents = null;
-//                    sendResponse();
+                    sendResponse();
 //                })
             });
             return true;
@@ -119,7 +119,6 @@ function getItems(mode, callback) {
                         return callback(err);
                     }
 
-                    console.log(data);
                     callback(null, data.items);
                 });
             });

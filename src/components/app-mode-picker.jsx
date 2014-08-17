@@ -39,7 +39,7 @@ var AppModePicker = React.createClass({
         });
 
         return (
-            <ul className="appMode">
+            <ul className="AppMode">
                 <li className={salesforceClasses} onClick={this.handleClickSalesforce} title={SALESFORCE}><span className="Mode-text">{SALESFORCE}</span></li>
                 <li className={chatterClasses} onClick={this.handleClickChatter} title={CHATTER}><span className="Mode-text">{CHATTER}</span></li>
                 <li className={googleClasses} onClick={this.handleClickGoogle} title={GOOGLE}><span className="Mode-text">{GOOGLE}</span></li>

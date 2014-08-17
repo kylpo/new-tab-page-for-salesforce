@@ -43,6 +43,11 @@ var App = React.createClass({
             window.location.href = 'https://www.google.com/search?q=' + encodeURI(query);
         }
     },
+    handleLogout: function() {
+        chrome.runtime.sendMessage({type: "logout"}, function() {
+            window.location.reload();
+        });
+    },
     render: function() {
         var wrapperClasses = cx({
             'wrapper': true,
@@ -64,6 +69,7 @@ var App = React.createClass({
         console.log(this.state.items);
         return (
             <div className={wrapperClasses}>
+                <button className="Logout" onClick={this.handleLogout}>Logout</button>
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
