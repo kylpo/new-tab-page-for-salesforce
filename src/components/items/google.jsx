@@ -17,6 +17,7 @@ var GoogleItems = React.createClass({
                 var urlParts = item.url.split('/');
                 items.push(
                     <ListItem
+                    key={item.url}
                     textTitle={item.title}
                     textDescription={item.url.split('//')[1]}
                     url={item.url}

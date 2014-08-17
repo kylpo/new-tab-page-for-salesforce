@@ -7,9 +7,19 @@ var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
 
 var Storage = require("./storage.js");
 var Api = require("./api.js")(Auth.refreshToken, Storage.upsertConnection);
-var localStateRecents = null;
+
 var localStateMode = null;
 var localStateConnection = null;
+var recentsCache = null;
+var chatterCache = null;
+var topSitesCache = null;
+
+
+chrome.storage.onChanged.addListener(function (changes, areaName) {
+    if (areaName === 'sync' && changes.hasOwnProperty('connection')) {
+        localStateConnection = changes.connection.newValue;
+    }
+});
 
 // This essentially acts as a dispatcher for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -56,7 +66,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             Storage.clearConnection(function() {
                 localStateConnection = null;
 //                Storage.clearActions(function() {
-//                    localStateRecents = null;
+//                    recentsCache = null;
                     sendResponse();
 //                })
             });
@@ -88,48 +98,95 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 function getItems(mode, callback) {
     switch (mode) {
         case 'salesforce':
-            if (localStateRecents) {
-                return callback(null, localStateRecents);
-            }
-
-            getConnection(function (err, connection) {
-                if (err) {
-                    return callback(err);
-                }
-
-                Api.getRecent(connection, function (err, data) {
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    localStateRecents = data;
-                    callback(null, data);
-                });
-            });
+            getSalesforceItems(callback);
             break;
 
         case 'chatter':
-            getConnection(function (err, connection) {
-                if (err) {
-                    return callback(err);
-                }
-
-                Api.getPosts(connection, function (err, data) {
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    callback(null, data.items);
-                });
-            });
+            getChatterItems(callback);
             break;
 
         case 'google':
-            chrome.topSites.get(function(mostVisitedURLs) {
-                callback(null, mostVisitedURLs);
-            });
+            getGoogleItems(callback);
             break;
     }
+}
+
+function getSalesforceItems(callback) {
+    if (recentsCache) {
+//        console.log('recentsCache');
+        return callback(null, recentsCache);
+    }
+
+    getConnection(function (err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        Api.getRecent(connection, function (err, data) {
+            if (err) {
+                return callback(err);
+            }
+
+//            console.log('recents api');
+            callback(null, data);
+
+            // cache results for 30 seconds
+            recentsCache = data;
+            setTimeout(function() {
+//                console.log('recents timeout');
+                recentsCache = null;
+            },30000);
+        });
+    });
+}
+
+function getChatterItems(callback) {
+    if (chatterCache) {
+//        console.log('chatterCache');
+        return callback(null, chatterCache);
+    }
+
+    getConnection(function (err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        Api.getPosts(connection, function (err, data) {
+            if (err) {
+                return callback(err);
+            }
+
+            callback(null, data.items);
+//            console.log('chatter api');
+
+            // cache results for 30 seconds
+            chatterCache = data.items;
+            setTimeout(function() {
+//                console.log('chatter timeout');
+                chatterCache = null;
+            },30000);
+        });
+    });
+}
+
+function getGoogleItems(callback) {
+    if (topSitesCache) {
+//        console.log('googleCache');
+        return callback(null, topSitesCache);
+    }
+
+    chrome.topSites.get(function(mostVisitedURLs) {
+        callback(null, mostVisitedURLs);
+
+//        console.log('google api');
+
+        // cache results for 60 seconds
+        topSitesCache = mostVisitedURLs;
+        setTimeout(function() {
+//            console.log('google timeout');
+            chatterCache = null;
+        },60000);
+    });
 }
 
 /**
@@ -193,7 +250,7 @@ function getAndStoreConnection(callback) {
         }
 
         Storage.upsertConnection(connection, function() {
-            localStateConnection = connection;
+//            localStateConnection = connection;
             callback(null, connection);
         });
     });

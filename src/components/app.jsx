@@ -4,6 +4,7 @@
 
 var React = require("react/addons");
 var cx = React.addons.classSet;
+
 var AuthorizePage = require('./authorize-page.jsx');
 var AppModePicker = require('./app-mode-picker.jsx');
 var SearchBar = require('./search-bar.jsx');
@@ -66,7 +67,7 @@ var App = React.createClass({
             items = <GoogleItems items={this.state.items}/>;
         }
 
-        console.log(this.state.items);
+//        console.log(this.state.items);
         return (
             <div className={wrapperClasses}>
                 <button className="Logout" onClick={this.handleLogout}>Logout</button>
@@ -93,11 +94,10 @@ chrome.runtime.sendMessage({type: "getConnection"}, function(connection) {
                 items = response.items;
             }
 
-            console.log(connection);
+//            console.log(connection);
             React.renderComponent(
                 <App instanceUrl={connection.instance_url} initialMode={mode} initialItems={items}/>, document.body
             );
         });
     }
 });
-

@@ -14,6 +14,7 @@ var SalesforceItems = React.createClass({
             this.props.items.forEach(function(item) {
                 items.push(
                     <ListItem
+                    key={item.Id}
                     textTitle={item.Name}
                     textDescription={item.attributes.type}
                     url={this.props.host + '/' + item.Id}
