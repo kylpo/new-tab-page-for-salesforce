@@ -222,30 +222,36 @@ html, body {
 
 
 }
-.Mode.is-salesforce.is-active,
-.Mode.is-salesforce.is-active:hover {
+.Mode.is-salesforce.is-active {
     color: #666;
     border-bottom: 4px solid #2A94D6;
+}
+.Mode.is-salesforce.is-active:hover {
+    color: #2A94D6;
 }
 
 .Mode.is-chatter:hover {
     color: #4EB1CB;
     border-bottom: 4px solid #4EB1CB;
 }
-.Mode.is-chatter.is-active,
-.Mode.is-chatter.is-active:hover{
+.Mode.is-chatter.is-active {
     color: #666;
     border-bottom: 4px solid #4EB1CB;
+}
+.Mode.is-chatter.is-active:hover{
+    color: #4EB1CB;
 }
 
 .Mode.is-google:hover {
     color: #F3AE4E;
     border-bottom: 4px solid #F3AE4E;
 }
-.Mode.is-google.is-active,
-.Mode.is-google.is-active:hover {
+.Mode.is-google.is-active {
     color: #666;
     border-bottom: 4px solid #F3AE4E;
+}
+.Mode.is-google.is-active:hover {
+    color: #F3AE4E;
 }
 
 .Post {
