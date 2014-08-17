@@ -266,12 +266,16 @@ html, body {
 .Post:hover .PostHeader-bottomBar{
     color: #4EB1CB;
 }
+.Post:hover .Post-img{
+    opacity: 1;
+}
 .Post-img {
     display: inline-block;
     margin: 5px;
     width: 38px;
     height: 38px;
     vertical-align: top;
+    opacity: 0.5;
 }
 .Post-header{
     display: inline-block;
