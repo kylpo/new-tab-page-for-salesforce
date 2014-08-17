@@ -16,8 +16,12 @@ var topSitesCache = null;
 
 
 chrome.storage.onChanged.addListener(function (changes, areaName) {
-    if (areaName === 'sync' && changes.hasOwnProperty('connection')) {
-        localStateConnection = changes.connection.newValue;
+    if (areaName === 'sync') {
+       if (changes.hasOwnProperty('connection')) {
+           localStateConnection = changes.connection.newValue;
+       } else if (changes.hasOwnProperty('mode')) {
+           localStateMode = changes.mode.newValue;
+       }
     }
 });
 
@@ -65,10 +69,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "logout":
             Storage.clearConnection(function() {
                 localStateConnection = null;
-//                Storage.clearActions(function() {
-//                    recentsCache = null;
-                    sendResponse();
-//                })
+                sendResponse();
             });
             return true;
 
@@ -82,7 +83,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
 
             Storage.setMode(request.mode);
-            localStateMode = request.mode;
+//            localStateMode = request.mode;
             return true;
 
         default:
