@@ -1,6 +1,6 @@
 {
-    "name": "[Unofficial] Salesforce New Tab Page",
-    "description": "Override the new tab page to access items Salesforce and Chatter resources",
+    "name": "New Tab Page for Salesforce",
+    "description": "Access Salesforce and Chatter resources from your new tab page!",
     "version": "0.0.1",
     "background": {
         "scripts": ["./build/background.js"]
