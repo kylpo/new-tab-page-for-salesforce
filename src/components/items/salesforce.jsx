@@ -6,35 +6,17 @@ var React = require("react");
 var ListItem = require("./list-item.jsx");
 
 var SalesforceItems = React.createClass({
-//    var items = [];
-//
-//if (this.props.items != null) {
-//    this.props.items.forEach(function (item) {
-//        items.push(<div>{item.Name}</div>);
-//    });
-//}
-//
-//return (
-//    <div className="items">
-//            {items}
-//    </div>
-//    );
     render: function() {
         var items = [];
 
         if (this.props.items != null) {
             this.props.items.forEach(function(item) {
-
-//                iconUrl={urlParts[0] + '//' + urlParts[2] + '/favicon.ico'}
-
-            // ['https:','','www.example.com']
-//            var urlParts = item.url.split('/');
                 items.push(
                     <ListItem
                     textTitle={item.Name}
-                    textDescription={item.Id}
-                    url={this.props.host + item.attributes.url}
-
+                    textDescription={item.attributes.type}
+                    url={this.props.host + '/' + item.Id}
+                    iconUrl={'../src/assets/img/' + this._getImageName(item.attributes.type) + '.svg'}
                     />
                 );
 
@@ -42,10 +24,75 @@ var SalesforceItems = React.createClass({
         }
 
         return (
-            <div className="items">
+            <div className="items is-salesforce">
             {items}
             </div>
             );
+
+    },
+    _getImageName: function(type) {
+        switch (type) {
+            case 'Account':
+            case 'Approval':
+            case 'Apps':
+            case 'Article':
+            case 'Calibration':
+            case 'Campaign':
+            case 'Canvas':
+            case 'Case':
+            case 'Chatterbox':
+            case 'Coaching':
+            case 'Concur':
+            case 'Contact':
+            case 'Contract':
+            case 'Custom':
+            case 'Dashboard':
+            case 'Default':
+            case 'Document':
+            case 'Drafts':
+            case 'Dropbox':
+            case 'Email':
+            case 'Empty':
+            case 'Endorsement':
+            case 'Event':
+            case 'Evernote':
+            case 'Feed':
+            case 'Feedback':
+            case 'File':
+            case 'Forecast':
+            case 'Goals':
+            case 'Groups':
+            case 'Insights':
+            case 'Invoice':
+            case 'Lead':
+            case 'Link':
+            case 'Note':
+            case 'Opportunity':
+            case 'Orders':
+            case 'People':
+            case 'Performance':
+            case 'Photo':
+            case 'Poll':
+            case 'Portal':
+            case 'Post':
+            case 'Product':
+            case 'Quotes':
+            case 'Recent':
+            case 'Record':
+            case 'Report':
+            case 'Solution':
+            case 'Task':
+            case 'Thanks':
+            case 'Today':
+            case 'Topic':
+                return type.toLowerCase();
+            case 'User':
+                return 'avatar';
+            case 'CollaborationGroup':
+                return 'groups';
+            default:
+                return 'generic_loading';
+        }
 
     }
 });

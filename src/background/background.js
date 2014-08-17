@@ -115,7 +115,6 @@ function getItems(mode, callback) {
 
         case 'google':
             chrome.topSites.get(function(mostVisitedURLs) {
-                console.log(mostVisitedURLs);
                 callback(null, mostVisitedURLs);
             });
             break;

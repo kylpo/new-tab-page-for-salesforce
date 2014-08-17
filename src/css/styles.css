@@ -68,29 +68,32 @@ html, body {
 
 .Item {
     color: #666;
-    margin: 20px 10px;
+    margin: 20px 0;
 
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
-    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    border-bottom: 1px solid #ccc;
 }
 .Item:hover {
     cursor: pointer;
-    /*color: #F3AE4E;*/
-    /*color: #666;*/
-
-    -webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.6);
-    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.6);
 }
-.Item:hover .ItemText{
-
-    /*background-color: #F3AE4E;*/
+.Item:hover .Item-icon {
+    opacity: 1;
 }
-/*.Item:hover .Item-icon {*/
-    /*background-color: #F3AE4E;*/
+/*.Item:hover .ItemText-title {*/
+    /*font-weight: bold;*/
 /*}*/
-.Item:hover .ItemText-description {
-    /*color: blue;*/
+
+.items.is-google .Item:hover .ItemText {
     color: #F3AE4E;
+}
+.items.is-google .Item:hover .ItemText-description {
+    color: #F3AE4E;
+}
+.items.is-salesforce .Item:hover .ItemText {
+    color: #2A94D6;
+
+}
+.items.is-salesforce .Item:hover .ItemText-description {
+    color: #2A94D6;
 }
 
 .Item-icon {
@@ -98,12 +101,6 @@ html, body {
     width: 32px;
     height: 34px;
     opacity: 0.5;
-    /*border: 1px solid;*/
-}
-.Item:hover .Item-icon {
-    opacity: 1;
-    /*color: white;*/
-    /*color: #666;*/
 }
 .ItemIcon-img {
     margin: 9px 8px;
@@ -112,25 +109,18 @@ html, body {
 }
 .ItemText {
     display: inline-block;
-    width: calc(100% - 35px);
+    width: calc(100% - 32px);
     height: 34px;
     line-height: 34px;
-
-    /*margin: 10px 0;*/
-    /*border: 1px solid;*/
-    /*border-left: none;*/
 }
 
 .ItemText-title,
 .ItemText-description {
     display: inline-block;
-    /*width: calc(50% - 20px);*/
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     margin: 0 10px;
-
-    /*max-height: 34px;*/
 }
 .ItemText-title {
     max-width: 70%;
