@@ -54,7 +54,7 @@ var App = React.createClass({
         var items;
 
         if (this.state.mode === SALESFORCE) {
-            items = <SalesforceItems items={this.state.items}/>;
+            items = <SalesforceItems host={this.props.instanceUrl} items={this.state.items}/>;
         } else if (this.state.mode === CHATTER) {
 
         } else if (this.state.mode === GOOGLE) {

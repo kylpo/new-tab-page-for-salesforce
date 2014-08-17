@@ -6,7 +6,6 @@ var React = require("react");
 var ListItem = require("./list-item.jsx");
 
 var GoogleItems = React.createClass({
-//{this.props.items[i].title}
     render: function() {
         var items = [];
 
