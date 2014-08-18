@@ -15,10 +15,10 @@ var SalesforceItems = React.createClass({
                 items.push(
                     <ListItem
                     key={item.Id}
-                    textTitle={item.Name}
+                    textTitle={item.Name || item.Title}
                     textDescription={item.attributes.type}
                     url={this.props.host + '/' + item.Id}
-                    iconUrl={'../src/assets/img/' + this._getImageName(item.attributes.type) + '.svg'}
+                    iconUrl={this._getImageUrl(item.attributes.type)}
                     />
                 );
 
@@ -34,7 +34,7 @@ var SalesforceItems = React.createClass({
             );
 
     },
-    _getImageName: function(type) {
+    _getImageUrl: function(type) {
         switch (type) {
             case 'Account':
             case 'Approval':
@@ -89,13 +89,24 @@ var SalesforceItems = React.createClass({
             case 'Thanks':
             case 'Today':
             case 'Topic':
-                return type.toLowerCase();
+                return imagePath(type.toLowerCase());
             case 'User':
-                return 'avatar';
+                return imagePath('avatar');
             case 'CollaborationGroup':
-                return 'groups';
+                return imagePath('groups');
+            case 'ContentDocument':
+                return imagePath('file');
             default:
-                return 'generic_loading';
+                if (type.match(/__c$/)) {
+                    // custom object
+                    return imagePath('custom');
+                }
+
+                return null;
+        }
+
+        function imagePath(name) {
+            return '../src/assets/img/' + name + '.svg';
         }
 
     }
