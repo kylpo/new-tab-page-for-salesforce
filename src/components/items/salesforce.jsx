@@ -11,7 +11,7 @@ var SalesforceItems = React.createClass({
         var items = [];
 
         if (this.props.items != null) {
-            this.props.items.forEach(function(item) {
+            this.props.items.every(function(item, index) {
                 items.push(
                     <ListItem
                     key={item.Id}
@@ -22,6 +22,7 @@ var SalesforceItems = React.createClass({
                     />
                 );
 
+                return index < 6;
             }.bind(this));
         }
 

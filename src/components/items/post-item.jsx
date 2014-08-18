@@ -22,7 +22,7 @@ var PostItem = React.createClass({
 
         var body = [];
         if (post.body.text != null) {
-            var bodySegments = post.body.text.split(/(?:\r\n|\r|\n)/);
+            var bodySegments = this._htmlDecode(post.body.text).split(/(?:\r\n|\r|\n)/);
 
             bodySegments.forEach(function (segment, index) {
                 body.push(segment);
@@ -56,6 +56,19 @@ var PostItem = React.createClass({
                 </div>
             </a>
             );
+    },
+    _htmlDecode: function(input) {
+        if (input.match(/&amp;|&lt;|&gt;|&quot;|&#39;/g)) {
+            return String(input)
+                .replace(/&amp;/g, '&')
+                .replace(/&quot;/g, '"')
+                .replace(/&#39;/g, "'")
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>');
+        }
+
+        return input;
     }
 });
 

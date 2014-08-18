@@ -240,6 +240,7 @@ function getAndStoreConnection(callback) {
         }
 
         Storage.upsertConnection(connection, function() {
+            localStateConnection = connection;
             callback(null, connection);
         });
     });
