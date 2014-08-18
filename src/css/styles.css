@@ -289,8 +289,8 @@ html, body {
     width: 100%;
 }
 .Post-message {
-    margin: 15px;
-    max-height: 64px; /* 4 lines at 16px line-height */
+    margin: 10px;
+    max-height: 80px;
     white-space: normal;
     word-wrap: break-word;
     overflow: hidden;
