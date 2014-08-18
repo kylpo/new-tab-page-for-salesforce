@@ -52,7 +52,7 @@ html, body {
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
-    max-height: 618px;
+    max-height: 700px;
     max-width: 618px;
     /*margin: 20px;*/
 }
@@ -288,6 +288,14 @@ html, body {
     height: 24px;
     width: 100%;
 }
+.Post-message {
+    margin: 15px;
+    max-height: 64px; /* 4 lines at 16px line-height */
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .TopBar-source {
     display: inline-block;
     font-size: 16px;
@@ -305,9 +313,7 @@ html, body {
 .PostMetaData-item {
     margin: 0 5px;
 }
-.Post-message {
-    margin: 15px;
-}
+
 
 .SearchBar {
     display: flex;
