@@ -10,6 +10,7 @@
     },
     "permissions": [
         "https://*.salesforce.com/",
+        "cookies",
         "identity",
         "topSites",
         "storage"

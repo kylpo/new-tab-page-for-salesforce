@@ -5,8 +5,7 @@
   "dependencies": {
     "react": "^0.11.1",
     "react-tools": "^0.11.1",
-    "salesforce-api-using-access-token": "^0.1.9",
-    "salesforce-chrome-oauth": "^0.1.3"
+    "salesforce-api-using-access-token": "^0.1.9"
   },
   "devDependencies": {
     "jsx-loader": "^0.11.0",

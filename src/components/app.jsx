@@ -5,7 +5,6 @@
 var React = require("react/addons");
 var cx = React.addons.classSet;
 
-var AuthorizePage = require('./authorize-page.jsx');
 var AppModePicker = require('./app-mode-picker.jsx');
 var SearchBar = require('./search-bar.jsx');
 var SalesforceItems = require('./items/salesforce.jsx');
@@ -68,9 +67,10 @@ var App = React.createClass({
         }
 
 //        console.log(this.state.items);
+//        <button className="Logout" onClick={this.handleLogout}>Logout</button>
         return (
             <div className={wrapperClasses}>
-                <button className="Logout" onClick={this.handleLogout}>Logout</button>
+
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
@@ -81,23 +81,16 @@ var App = React.createClass({
     }
 });
 
-chrome.runtime.sendMessage({type: "getConnection"}, function(connection) {
-    if (connection == null) {
-        React.renderComponent(<AuthorizePage/>, document.body);
-    } else {
-        chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
-            var mode = SALESFORCE;
-            var items = null;
+chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
+    var mode = SALESFORCE;
+    var items = null;
 
-            if (response != null) {
-                mode = response.mode;
-                items = response.items;
-            }
-
-//            console.log(connection);
-            React.renderComponent(
-                <App instanceUrl={connection.instance_url} initialMode={mode} initialItems={items}/>, document.body
-            );
-        });
+    if (response != null) {
+        mode = response.mode;
+        items = response.items;
     }
+
+    React.renderComponent(
+        <App instanceUrl={response.url} initialMode={mode} initialItems={items}/>, document.body
+    );
 });

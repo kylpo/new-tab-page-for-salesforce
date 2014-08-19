@@ -1,12 +1,13 @@
 'use strict';
 
-var clientId = require("../../config.js").clientId;
-var clientSecret = require("../../config.js").clientSecret;
-var host = require("../../config.js").host;
-var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
+//var clientId = require("../../config.js").clientId;
+//var clientSecret = require("../../config.js").clientSecret;
+//var host = require("../../config.js").host;
+//var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
 
 var Storage = require("./storage.js");
-var Api = require("./api.js")(Auth.refreshToken, Storage.upsertConnection);
+//var Api = require("./api.js")(null, null);
+var Api = require("salesforce-api-using-access-token");
 
 var localStateMode = null;
 var localStateConnection = null;
@@ -116,10 +117,13 @@ function getSalesforceItems(callback) {
         return callback(null, recentsCache);
     }
 
-    getConnection(function (err, connection) {
-        if (err) {
-            return callback(err);
-        }
+//    getConnection(function (err, connection) {
+//        if (err) {
+//            return callback(err);
+//        }
+
+    chrome.cookies.getAll({name: 'sid', domain: "na13.salesforce.com"}, function(cookies) {
+        var connection = {instance_url: "https://na13.salesforce.com", access_token: cookies[0].value};
 
         Api.getRecent(connection, function (err, data) {
             if (err) {
@@ -142,16 +146,19 @@ function getChatterItems(callback) {
         return callback(null, chatterCache);
     }
 
-    getConnection(function (err, connection) {
-        if (err) {
-            return callback(err);
-        }
+//    getConnection(function (err, connection) {
+//        if (err) {
+//            return callback(err);
+//        }
 
-        Api.getPosts(connection, function (err, data) {
+    chrome.cookies.getAll({name: 'sid', domain: "na17.salesforce.com"}, function(cookies) {
+        var connection = {instance_url: "https://na17.salesforce.com", access_token: cookies[0].value};
+
+        Api.getFeed(connection, null, function (err, data) {
             if (err) {
                 return callback(err);
             }
-
+            console.log(data);
             callback(null, data.items);
 
             // cache results for 30 seconds
@@ -161,6 +168,8 @@ function getChatterItems(callback) {
             },30000);
         });
     });
+
+//    });
 }
 
 function getGoogleItems(callback) {

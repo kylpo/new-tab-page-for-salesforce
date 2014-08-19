@@ -5,33 +5,6 @@ html, body {
     color: #293f54;
 }
 
-.skin-Button {
-    /*border-radius: 5px;*/
-    font-size: 16px;
-    font-weight: 700;
-    border: 1px solid #dfe0e1;
-    color: #525354;
-    background-color: white;
-    padding: 7px;
-    margin: 5px 15px;
-    outline: none;
-    cursor: pointer;
-}
-.skin-Button:active {
-    background: #edeff0;
-}
-.skin-Button.is-active {
-    background: #2a94d6;
-    border-color: #2a94d6;
-    color: white;
-}
-.skin-Button.is-error:hover {
-    color: #CF5C60;
-}
-.skin-Button.is-active:active {
-    background: #1378b7;
-}
-
 .wrapper {
      height: 100%;
 }
@@ -57,7 +30,6 @@ html, body {
     /*margin: 20px;*/
 }
 
-
 .AppMode {
     list-style: none;
     display: flex;
@@ -65,7 +37,6 @@ html, body {
     -webkit-margin-after: 0;
     -webkit-padding-start: 0;
 }
-
 
 .Authorize {
     text-align: center;
