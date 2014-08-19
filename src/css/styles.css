@@ -290,7 +290,8 @@ html, body {
 }
 .Post-message {
     margin: 10px;
-    max-height: 80px;
+    max-height: 73px;
+    font-size: 14px;
     white-space: normal;
     word-wrap: break-word;
     overflow: hidden;

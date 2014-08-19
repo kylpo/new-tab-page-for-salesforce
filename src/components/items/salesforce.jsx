@@ -97,9 +97,8 @@ var SalesforceItems = React.createClass({
             case 'ContentDocument':
                 return imagePath('file');
             default:
-                if (type.match(/__c$/)) {
-                    // custom object
-                    return imagePath('custom');
+                if (type.match(/__c$/)) { // custom object
+                    return imagePath('generic_loading');
                 }
 
                 return null;
