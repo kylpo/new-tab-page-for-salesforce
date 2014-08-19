@@ -81,13 +81,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true;
 
-        case "logout":
-            Storage.clearConnection(function() {
-                localStateConnection = null;
-                sendResponse();
-            });
-            return true;
-
         case "setMode":
             Storage.setMode(request.mode);
             return true;

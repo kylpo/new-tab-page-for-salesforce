@@ -1,7 +1,7 @@
 {
     "name": "New Tab Page for Salesforce",
     "description": "Search and access Salesforce and Chatter resources from your new tab page!",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "background": {
         "scripts": ["./build/background.js"]
     },
