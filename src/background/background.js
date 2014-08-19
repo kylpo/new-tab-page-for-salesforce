@@ -1,12 +1,6 @@
 'use strict';
 
-//var clientId = require("../../config.js").clientId;
-//var clientSecret = require("../../config.js").clientSecret;
-//var host = require("../../config.js").host;
-//var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
-
 var Storage = require("./storage.js");
-//var Api = require("./api.js")(null, null);
 var Api = require("salesforce-api-using-access-token");
 
 var localStateMode = null;
@@ -47,14 +41,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                return sendResponse({mode: mode});
-//                getItems(mode, function(err, items) {
-//                    if (err) {
-//                        return sendResponse({mode: mode});
-//                    }
-//
-//                    sendResponse({mode: mode, items: items});
-//                });
+                getConnection(function(err, connection) {
+                    if (err) {
+                        return sendResponse({mode: mode});
+                    }
+
+                    sendResponse({mode: mode, domain: connection.domain});
+                });
             });
             return true;
 
@@ -85,16 +78,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 }
 
                 sendResponse(items);
-            });
-            return true;
-
-        case "authorize":
-            getAndStoreConnection(function(err, connection) {
-                if (err) {
-                    console.error(err.message);
-                }
-
-                sendResponse();
             });
             return true;
 
@@ -149,7 +132,6 @@ function getSalesforceItems(callback) {
             if (err) {
                 return callback(err);
             }
-
             callback(null, data);
 
             // cache results for 30 seconds
@@ -175,7 +157,6 @@ function getChatterItems(callback) {
             if (err) {
                 return callback(err);
             }
-            console.log(data);
             callback(null, data.items);
 
             // cache results for 30 seconds
@@ -185,8 +166,6 @@ function getChatterItems(callback) {
             },30000);
         });
     });
-
-//    });
 }
 
 function getGoogleItems(callback) {
@@ -217,12 +196,13 @@ function getConnection(callback) {
         return callback(null, localStateConnection);
     }
 
-    chrome.cookies.getAll({name: 'sid', domain: "na15.salesforce.com"}, function(cookies) {
+//    chrome.cookies.getAll({name: 'sid', domain: "na15.salesforce.com"}, function(cookies) {
+    chrome.cookies.getAll({name: 'sid'}, function(cookies) {
         if (cookies.length === 0) {
-            return callback(new Error("no cookies found"));
+            return callback(new Error('no cookies found'));
         }
 
-        var connection = {instance_url: "https://na15.salesforce.com", access_token: cookies[0].value};
+        var connection = {instance_url: 'https://' + cookies[0].domain, access_token: cookies[0].value, domain: cookies[0].domain};
         localStateConnection = connection;
         return callback(null, connection);
     });
@@ -249,26 +229,5 @@ function getMode(callback) {
             localStateMode = mode;
             return callback(null, mode);
         }
-    });
-}
-
-
-/**
- * 1. launch auth flow
- * 2. store the connection
- * 3. callback with connection or error
- *
- * @param {function(Object, Object=)} callback
- */
-function getAndStoreConnection(callback) {
-    Auth.authenticate(function(err, connection) {
-        if (err) {
-            return callback(err);
-        }
-
-        Storage.upsertConnection(connection, function() {
-            localStateConnection = connection;
-            callback(null, connection);
-        });
     });
 }

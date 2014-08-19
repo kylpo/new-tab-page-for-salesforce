@@ -37,8 +37,10 @@ var SalesforceItems = React.createClass({
             }.bind(this));
         }
 
-        if (this.state.items !== undefined) {
-            var goToButton = <GoTo target="Salesforce" url={this.props.host + '/home/home.jsp'}/>;
+        if (this.state.items === null) {
+            var goToButton = <GoTo text="Log in to Salesforce" url={this.props.host + '/home/home.jsp'}/>;
+        } else if (this.state.items !== undefined) {
+            var goToButton = <GoTo text="Go to Salesforce" url={this.props.host + '/home/home.jsp'}/>;
         }
 
         return (

@@ -19,8 +19,7 @@ var App = React.createClass({
     getInitialState: function() {
         return {
             mode: this.props.initialMode,
-            host: this.props.initialHost,
-            items: this.props.initialItems
+            domain: this.props.initialDomain
         };
     },
     handleModeChange: function(mode) {
@@ -37,18 +36,22 @@ var App = React.createClass({
     },
     handleSubmit: function(event, query) {
         event.preventDefault();
+
+        var host = this._getHost();
+
         if (this.state.mode === 'salesforce') {
-            window.location.href = this.state.host
-                + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query);
+            window.location.href = host + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query);
 
         } else if (this.state.mode === 'chatter') {
-            window.location.href = this.state.host
-                + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query
+            window.location.href = host + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query
                     + '#!/initialViewMode=feeds');
 
         } else if (this.state.mode === 'google') {
             window.location.href = 'https://www.google.com/search?q=' + encodeURI(query);
         }
+    },
+    _getHost: function() {
+        return this.state.domain != null? 'https://' + this.state.domain : 'https://login.salesforce.com';
     },
     handleLogout: function() {
         chrome.runtime.sendMessage({type: "logout"}, function() {
@@ -66,18 +69,22 @@ var App = React.createClass({
         var items;
 
         if (this.state.mode === SALESFORCE) {
-            items = <SalesforceItems host={this.state.host}/>;
+            items = <SalesforceItems host={this._getHost()}/>;
         } else if (this.state.mode === CHATTER) {
-            items = <ChatterItems host={this.state.host}/>;
+            items = <ChatterItems host={this._getHost()}/>;
         } else if (this.state.mode === GOOGLE) {
             items = <GoogleItems/>;
         }
 
-//        console.log(this.state.items);
-//        <button className="Logout" onClick={this.handleLogout}>Logout</button>
+        var hostPicker;
+
+        if (this.state.domain != null) {
+            hostPicker = <button className="Logout" onClick={this.handleLogout}>{this.state.domain}</button>;
+        }
+
         return (
             <div className={wrapperClasses}>
-
+            {hostPicker}
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
@@ -90,16 +97,17 @@ var App = React.createClass({
 
 chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
     var mode = SALESFORCE;
-    var host = 'https://login.salesforce.com';
-    var items = null;
+    var domain = null;
 
     if (response != null) {
         mode = response.mode;
-        items = response.items;
-
+        domain = response.domain;
+//        if (response.connection != null && response.connection.instance_url != null) {
+//            host = response.connection.instance_url;
+//        }
     }
 
     React.renderComponent(
-        <App initialHost={host} initialMode={mode}/>, document.body
+        <App initialDomain={domain} initialMode={mode}/>, document.body
     );
 });
