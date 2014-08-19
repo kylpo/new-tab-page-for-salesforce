@@ -7,11 +7,22 @@ var ListItem = require("./list-item.jsx");
 var GoTo = require("./go-to.jsx");
 
 var SalesforceItems = React.createClass({
+    getInitialState: function() {
+        return {items: undefined};
+    },
+    componentDidMount: function() {
+        chrome.runtime.sendMessage({type: "getSalesforceItems"}, function(response) {
+            if (this.isMounted()) {
+                this.setState({items: response});
+            }
+        }.bind(this));
+    },
     render: function() {
         var items = [];
+        var goToButton = null;
 
-        if (this.props.items != null) {
-            this.props.items.every(function(item, index) {
+        if (this.state.items != null) {
+            this.state.items.every(function(item, index) {
                 items.push(
                     <ListItem
                     key={item.Id}
@@ -26,10 +37,14 @@ var SalesforceItems = React.createClass({
             }.bind(this));
         }
 
+        if (this.state.items !== undefined) {
+            var goToButton = <GoTo target="Salesforce" url={this.props.host + '/home/home.jsp'}/>;
+        }
+
         return (
             <div className="Items is-salesforce">
             {items}
-                <GoTo target="Salesforce" url={this.props.host + '/home/home.jsp'}/>
+            {goToButton}
             </div>
             );
 

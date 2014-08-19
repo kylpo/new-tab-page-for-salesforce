@@ -47,13 +47,44 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                getItems(mode, function(err, items) {
-                    if (err) {
-                        return sendResponse({mode: mode});
-                    }
+                return sendResponse({mode: mode});
+//                getItems(mode, function(err, items) {
+//                    if (err) {
+//                        return sendResponse({mode: mode});
+//                    }
+//
+//                    sendResponse({mode: mode, items: items});
+//                });
+            });
+            return true;
 
-                    sendResponse({mode: mode, items: items});
-                });
+        case "getSalesforceItems":
+            getSalesforceItems(function(err, items) {
+                if (err) {
+                    return sendResponse(null);
+                }
+
+                sendResponse(items);
+            });
+            return true;
+
+        case "getChatterItems":
+            getChatterItems(function(err, items) {
+                if (err) {
+                    return sendResponse(null);
+                }
+
+                sendResponse(items);
+            });
+            return true;
+
+        case "getGoogleItems":
+            getGoogleItems(function(err, items) {
+                if (err) {
+                    return sendResponse(null);
+                }
+
+                sendResponse(items);
             });
             return true;
 
@@ -74,15 +105,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true;
 
-        case "setModeAndGetItems":
-            getItems(request.mode, function(err, items) {
-                if (err) {
-                    return sendResponse(null);
-                }
-
-                sendResponse(items);
-            });
-
+        case "setMode":
             Storage.setMode(request.mode);
             return true;
 
@@ -117,13 +140,10 @@ function getSalesforceItems(callback) {
         return callback(null, recentsCache);
     }
 
-//    getConnection(function (err, connection) {
-//        if (err) {
-//            return callback(err);
-//        }
-
-    chrome.cookies.getAll({name: 'sid', domain: "na13.salesforce.com"}, function(cookies) {
-        var connection = {instance_url: "https://na13.salesforce.com", access_token: cookies[0].value};
+    getConnection(function (err, connection) {
+        if (err) {
+            return callback(err);
+        }
 
         Api.getRecent(connection, function (err, data) {
             if (err) {
@@ -146,13 +166,10 @@ function getChatterItems(callback) {
         return callback(null, chatterCache);
     }
 
-//    getConnection(function (err, connection) {
-//        if (err) {
-//            return callback(err);
-//        }
-
-    chrome.cookies.getAll({name: 'sid', domain: "na17.salesforce.com"}, function(cookies) {
-        var connection = {instance_url: "https://na17.salesforce.com", access_token: cookies[0].value};
+    getConnection(function (err, connection) {
+        if (err) {
+            return callback(err);
+        }
 
         Api.getFeed(connection, null, function (err, data) {
             if (err) {
@@ -200,13 +217,14 @@ function getConnection(callback) {
         return callback(null, localStateConnection);
     }
 
-    Storage.getConnection(function(err, connection) {
-        if (err || connection === null) {
-            return callback(err);
-        } else {
-            localStateConnection = connection;
-            return callback(null, connection);
+    chrome.cookies.getAll({name: 'sid', domain: "na15.salesforce.com"}, function(cookies) {
+        if (cookies.length === 0) {
+            return callback(new Error("no cookies found"));
         }
+
+        var connection = {instance_url: "https://na15.salesforce.com", access_token: cookies[0].value};
+        localStateConnection = connection;
+        return callback(null, connection);
     });
 }
 

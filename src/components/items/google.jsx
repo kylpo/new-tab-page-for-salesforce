@@ -7,11 +7,22 @@ var ListItem = require("./list-item.jsx");
 var GoTo = require("./go-to.jsx");
 
 var GoogleItems = React.createClass({
+    getInitialState: function() {
+        return {items: undefined};
+    },
+    componentDidMount: function() {
+        chrome.runtime.sendMessage({type: "getGoogleItems"}, function(response) {
+            if (this.isMounted()) {
+                this.setState({items: response});
+            }
+        }.bind(this));
+    },
     render: function() {
         var items = [];
+        var goToButton = null;
 
-        if (this.props.items != null) {
-            this.props.items.every(function(item, index) {
+        if (this.state.items != null) {
+            this.state.items.every(function(item, index) {
 
                 // ['https:','','www.example.com']
                 var urlParts = item.url.split('/');
@@ -29,10 +40,14 @@ var GoogleItems = React.createClass({
             });
         }
 
+        if (this.state.items !== undefined) {
+            var goToButton = <GoTo target="Google" url='https://www.google.com'/>;
+        }
+
         return (
             <div className="Items is-google">
             {items}
-                <GoTo target="Google" url='https://www.google.com'/>
+            {goToButton}
             </div>
             );
     }

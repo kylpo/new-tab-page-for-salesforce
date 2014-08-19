@@ -19,10 +19,17 @@ var App = React.createClass({
     getInitialState: function() {
         return {
             mode: this.props.initialMode,
+            host: this.props.initialHost,
             items: this.props.initialItems
         };
     },
     handleModeChange: function(mode) {
+        chrome.runtime.sendMessage({type: 'setMode', mode: mode});
+        this.setState({mode: mode});
+
+    },
+    handleHostChange: function(host) {
+        //TODO
         chrome.runtime.sendMessage({type: 'setModeAndGetItems', mode: mode}, function(items) {
             this.setState({mode: mode, items: items});
         }.bind(this));
@@ -31,11 +38,11 @@ var App = React.createClass({
     handleSubmit: function(event, query) {
         event.preventDefault();
         if (this.state.mode === 'salesforce') {
-            window.location.href = this.props.instanceUrl
+            window.location.href = this.state.host
                 + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query);
 
         } else if (this.state.mode === 'chatter') {
-            window.location.href = this.props.instanceUrl
+            window.location.href = this.state.host
                 + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query
                     + '#!/initialViewMode=feeds');
 
@@ -59,11 +66,11 @@ var App = React.createClass({
         var items;
 
         if (this.state.mode === SALESFORCE) {
-            items = <SalesforceItems host={this.props.instanceUrl} items={this.state.items}/>;
+            items = <SalesforceItems host={this.state.host}/>;
         } else if (this.state.mode === CHATTER) {
-            items = <ChatterItems host={this.props.instanceUrl} items={this.state.items}/>;
+            items = <ChatterItems host={this.state.host}/>;
         } else if (this.state.mode === GOOGLE) {
-            items = <GoogleItems items={this.state.items}/>;
+            items = <GoogleItems/>;
         }
 
 //        console.log(this.state.items);
@@ -83,14 +90,16 @@ var App = React.createClass({
 
 chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
     var mode = SALESFORCE;
+    var host = 'https://login.salesforce.com';
     var items = null;
 
     if (response != null) {
         mode = response.mode;
         items = response.items;
+
     }
 
     React.renderComponent(
-        <App instanceUrl={response.url} initialMode={mode} initialItems={items}/>, document.body
+        <App initialHost={host} initialMode={mode}/>, document.body
     );
 });

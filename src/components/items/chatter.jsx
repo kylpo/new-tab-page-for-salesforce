@@ -7,21 +7,36 @@ var PostItem = require("./post-item.jsx");
 var GoTo = require("./go-to.jsx");
 
 var ChatterItems = React.createClass({
+    getInitialState: function() {
+        return {items: undefined};
+    },
+    componentDidMount: function() {
+        chrome.runtime.sendMessage({type: "getChatterItems"}, function(response) {
+            if (this.isMounted()) {
+                this.setState({items: response});
+            }
+        }.bind(this));
+    },
     render: function() {
         var items = [];
+        var goToButton = null;
 
-        if (this.props.items != null) {
-            this.props.items.every(function(item, index) {
+        if (this.state.items != null) {
+            this.state.items.every(function(item, index) {
                 items.push(<PostItem key={item.id} post={item} url={this.props.host + '/' + item.id}/>);
 
                 return index < 2;
             }.bind(this));
         }
 
+        if (this.state.items !== undefined) {
+            var goToButton = <GoTo target="Chatter" url={this.props.host + '/_ui/core/chatter/ui/ChatterPage'}/>;
+        }
+
         return (
             <div className="Items is-chatter">
             {items}
-                <GoTo target="Chatter" url={this.props.host + '/_ui/core/chatter/ui/ChatterPage'}/>
+            {goToButton}
             </div>
             );
     }
