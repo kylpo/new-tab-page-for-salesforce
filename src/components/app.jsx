@@ -5,6 +5,7 @@
 var React = require("react/addons");
 var cx = React.addons.classSet;
 
+var DomainPicker = require('./domainpicker/domain-picker.jsx');
 var AppModePicker = require('./app-mode-picker.jsx');
 var SearchBar = require('./search-bar.jsx');
 var SalesforceItems = require('./items/salesforce.jsx');
@@ -27,12 +28,10 @@ var App = React.createClass({
         this.setState({mode: mode});
 
     },
-    handleHostChange: function(host) {
-        //TODO
-        chrome.runtime.sendMessage({type: 'setModeAndGetItems', mode: mode}, function(items) {
-            this.setState({mode: mode, items: items});
+    handleDomainChange: function(domain) {
+        chrome.runtime.sendMessage({type: 'setDomain', domain: domain}, function() {
+            this.setState({domain: domain});
         }.bind(this));
-
     },
     handleSubmit: function(event, query) {
         event.preventDefault();
@@ -69,22 +68,22 @@ var App = React.createClass({
         var items;
 
         if (this.state.mode === SALESFORCE) {
-            items = <SalesforceItems host={this._getHost()}/>;
+            items = <SalesforceItems domain={this.state.domain} host={this._getHost()}/>;
         } else if (this.state.mode === CHATTER) {
-            items = <ChatterItems host={this._getHost()}/>;
+            items = <ChatterItems domain={this.state.domain} host={this._getHost()}/>;
         } else if (this.state.mode === GOOGLE) {
             items = <GoogleItems/>;
         }
 
-        var hostPicker;
-
-        if (this.state.domain != null) {
-            hostPicker = <button className="Logout" onClick={this.handleLogout}>{this.state.domain}</button>;
-        }
-
+//        var hostPicker;
+//
+//        if (this.state.domain != null) {
+//            hostPicker = <button className="Logout" onClick={this.handleLogout}>{this.state.domain}</button>;
+//        }
+//        {hostPicker}
         return (
             <div className={wrapperClasses}>
-            {hostPicker}
+                <DomainPicker domain={this.state.domain} handleDomainChange={this.handleDomainChange}/>
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
@@ -102,9 +101,6 @@ chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
     if (response != null) {
         mode = response.mode;
         domain = response.domain;
-//        if (response.connection != null && response.connection.instance_url != null) {
-//            host = response.connection.instance_url;
-//        }
     }
 
     React.renderComponent(

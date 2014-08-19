@@ -9,8 +9,8 @@ var PostItem = React.createClass({
         var post = this.props.post;
 
         var source = post.actor.name === post.parent.name ?
-            post.actor.name :
-            post.actor.name + ' \u2014 ' + post.parent.name;
+            this._htmlDecode(post.actor.name) :
+            this._htmlDecode(post.actor.name + ' \u2014 ' + post.parent.name);
 
         var likes = post.likes.total > 0 ?
             <span className="PostMetaData-item">{post.likes.total + ' '}<span className="fa fa-thumbs-o-up"/></span> :

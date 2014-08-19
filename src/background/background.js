@@ -4,16 +4,22 @@ var Storage = require("./storage.js");
 var Api = require("salesforce-api-using-access-token");
 
 var localStateMode = null;
-var localStateConnection = null;
+//var localStateConnection = null;
+var localStateDomain = null;
+
 var recentsCache = null;
 var chatterCache = null;
 var topSitesCache = null;
 
+var recentsCacheTimeout = null;
+var chatterCacheTimeout = null;
+var topSitesCacheTimeout = null;
+
 
 chrome.storage.onChanged.addListener(function (changes, areaName) {
     if (areaName === 'sync') {
-       if (changes.hasOwnProperty('connection')) {
-           localStateConnection = changes.connection.newValue;
+       if (changes.hasOwnProperty('domain')) {
+           localStateDomain = changes.domain.newValue;
        } else if (changes.hasOwnProperty('mode')) {
            localStateMode = changes.mode.newValue;
        }
@@ -41,12 +47,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                getConnection(function(err, connection) {
+                getDomain(function(err, domain) {
                     if (err) {
                         return sendResponse({mode: mode});
                     }
 
-                    sendResponse({mode: mode, domain: connection.domain});
+                    sendResponse({mode: mode, domain: domain});
                 });
             });
             return true;
@@ -85,30 +91,38 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             Storage.setMode(request.mode);
             return true;
 
+        case "setDomain":
+            Storage.setDomain(request.domain, function() {
+                clearCache();
+
+                sendResponse();
+            });
+            return true;
+
+        case 'getCookies':
+            chrome.cookies.getAll({name: 'sid'}, function(cookies) {
+                if (cookies.length === 0) {
+                    console.error('no cookies found');
+                    return sendResponse(null);
+                }
+
+                sendResponse(cookies);
+            });
+            return true;
+
         default:
             break;
     }
 });
 
-/**
- * @param {string} mode
- * @param {function(Object, Object=)} callback
- * @returns actions in callback or an error callback
- */
-function getItems(mode, callback) {
-    switch (mode) {
-        case 'salesforce':
-            getSalesforceItems(callback);
-            break;
+function clearCache() {
+    recentsCache = null;
+    chatterCache = null;
+    topSitesCache = null;
 
-        case 'chatter':
-            getChatterItems(callback);
-            break;
-
-        case 'google':
-            getGoogleItems(callback);
-            break;
-    }
+    recentsCacheTimeout = null;
+    chatterCacheTimeout = null;
+    topSitesCacheTimeout = null;
 }
 
 function getSalesforceItems(callback) {
@@ -129,7 +143,7 @@ function getSalesforceItems(callback) {
 
             // cache results for 30 seconds
             recentsCache = data;
-            setTimeout(function() {
+            recentsCacheTimeout = setTimeout(function() {
                 recentsCache = null;
             },30000);
         });
@@ -154,7 +168,7 @@ function getChatterItems(callback) {
 
             // cache results for 30 seconds
             chatterCache = data.items;
-            setTimeout(function() {
+            chatterCacheTimeout = setTimeout(function() {
                 chatterCache = null;
             },30000);
         });
@@ -171,7 +185,7 @@ function getGoogleItems(callback) {
 
         // cache results for 60 seconds
         topSitesCache = mostVisitedURLs;
-        setTimeout(function() {
+        topSitesCacheTimeout = setTimeout(function() {
             chatterCache = null;
         },60000);
     });
@@ -185,19 +199,35 @@ function getGoogleItems(callback) {
  * @returns connection in callback or an error callback
  */
 function getConnection(callback) {
-    if (localStateConnection) {
-        return callback(null, localStateConnection);
-    }
-
-//    chrome.cookies.getAll({name: 'sid', domain: "na15.salesforce.com"}, function(cookies) {
-    chrome.cookies.getAll({name: 'sid'}, function(cookies) {
-        if (cookies.length === 0) {
-            return callback(new Error('no cookies found'));
+    getDomain(function(err, domain) {
+        if (err) {
+            return callback(err);
         }
 
-        var connection = {instance_url: 'https://' + cookies[0].domain, access_token: cookies[0].value, domain: cookies[0].domain};
-        localStateConnection = connection;
-        return callback(null, connection);
+        chrome.cookies.getAll({name: 'sid', domain: domain}, function(cookies) {
+            if (cookies.length === 0) {
+                return callback(new Error('no cookies found'));
+            }
+
+            var connection = {instance_url: 'https://' + cookies[0].domain, access_token: cookies[0].value};
+            return callback(null, connection);
+        });
+    })
+
+}
+
+function getDomain(callback) {
+    if (localStateDomain) {
+        return callback(null, localStateDomain);
+    }
+
+    Storage.getDomain(function(err, domain) {
+        if (err) {
+            return callback(err);
+        } else {
+            localStateDomain = domain;
+            return callback(null, domain);
+        }
     });
 }
 
