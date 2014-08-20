@@ -11,6 +11,12 @@ var SalesforceItems = React.createClass({
         return {items: undefined};
     },
     componentDidMount: function() {
+        this._getItems();
+    },
+    componentWillReceiveProps: function() {
+        this._getItems();
+    },
+    _getItems: function() {
         chrome.runtime.sendMessage({type: "getSalesforceItems"}, function(response) {
             if (this.isMounted()) {
                 this.setState({items: response});
@@ -18,6 +24,7 @@ var SalesforceItems = React.createClass({
         }.bind(this));
     },
     render: function() {
+        console.log('here');
         var items = [];
         var goToButton = null;
 

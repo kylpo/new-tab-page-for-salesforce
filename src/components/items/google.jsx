@@ -11,6 +11,12 @@ var GoogleItems = React.createClass({
         return {items: undefined};
     },
     componentDidMount: function() {
+        this._getItems();
+    },
+    componentWillReceiveProps: function() {
+        this._getItems();
+    },
+    _getItems: function() {
         chrome.runtime.sendMessage({type: "getGoogleItems"}, function(response) {
             if (this.isMounted()) {
                 this.setState({items: response});
@@ -41,7 +47,7 @@ var GoogleItems = React.createClass({
         }
 
         if (this.state.items !== undefined) {
-            var goToButton = <GoTo target="Google" url='https://www.google.com'/>;
+            var goToButton = <GoTo text="Go to Google" url='https://www.google.com'/>;
         }
 
         return (

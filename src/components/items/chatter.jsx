@@ -11,6 +11,12 @@ var ChatterItems = React.createClass({
         return {items: undefined};
     },
     componentDidMount: function() {
+        this._getItems();
+    },
+    componentWillReceiveProps: function() {
+        this._getItems();
+    },
+    _getItems: function() {
         chrome.runtime.sendMessage({type: "getChatterItems"}, function(response) {
             if (this.isMounted()) {
                 this.setState({items: response});
