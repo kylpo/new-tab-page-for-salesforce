@@ -39,6 +39,7 @@ var App = React.createClass({
     handleThemeChange: function() {
         var theme = this.state.theme === DEFAULT_THEME ? DARK_THEME : DEFAULT_THEME;
 
+        console.log(theme);
         chrome.runtime.sendMessage({type: 'setTheme', theme: theme});
         this.setState({theme: theme});
 
@@ -59,11 +60,6 @@ var App = React.createClass({
     },
     _getHost: function() {
         return this.state.domain != null? 'https://' + this.state.domain : 'https://login.salesforce.com';
-    },
-    handleLogout: function() {
-        chrome.runtime.sendMessage({type: "logout"}, function() {
-            window.location.reload();
-        });
     },
     render: function() {
         var wrapperClasses = cx({
@@ -89,14 +85,14 @@ var App = React.createClass({
         return (
             <div className={wrapperClasses}>
                 <DomainPicker domain={this.state.domain} handleDomainChange={this.handleDomainChange}/>
+                <button className="ThemePicker skin-Button--noBorder" title="Change theme" onClick={this.handleThemeChange}>
+                    <span className={themeIconClasses}/>
+                </button>
                 <div className="centered">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
                 {items}
                 </div>
-                <button className="ThemePicker skin-Button--noBorder" title="Change theme" onClick={this.handleThemeChange}>
-                    <span className={themeIconClasses}/>
-                </button>
             </div>
             );
     }
@@ -112,6 +108,7 @@ chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
     }
 
     chrome.runtime.sendMessage({type: "getTheme"}, function(theme) {
+        console.log(theme);
         React.renderComponent(
             <App initialDomain={domain} initialMode={mode} initialTheme={theme}/>, document.body
         );

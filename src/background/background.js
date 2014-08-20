@@ -22,6 +22,10 @@ chrome.storage.onChanged.addListener(function (changes, areaName) {
        } else if (changes.hasOwnProperty('mode')) {
            localStateMode = changes.mode.newValue;
        }
+    } else if (areaName === 'local') {
+        if (changes.hasOwnProperty('theme')) {
+            localStateTheme = changes.theme.newValue;
+        }
     }
 });
 

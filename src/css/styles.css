@@ -16,7 +16,6 @@ html, body {
     top: 0; left: 0; bottom: 0; right: 0;
     max-height: 700px;
     max-width: 618px;
-    /*margin: 20px;*/
 }
 
 .skin-Button--noBorder {
@@ -190,7 +189,6 @@ html, body {
     font-size: 12px;
 }
 
-
 .Mode {
     flex-grow: 1;
     width: 33%;
@@ -315,11 +313,9 @@ html, body {
     margin: 0 5px;
 }
 
-
 .SearchBar {
     display: flex;
     margin-top: 40px;
-    /*height: 20px;*/
 }
 .SearchBar-input {
     height: 34px;
@@ -375,7 +371,6 @@ html, body {
 .dark-theme .skin-Button--noBorder:hover {
     color: #ccc;
 }
-
 
 .dark-theme .DomainPicker {
     color: #666;
