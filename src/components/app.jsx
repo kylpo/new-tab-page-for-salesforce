@@ -12,15 +12,18 @@ var SalesforceItems = require('./items/salesforce.jsx');
 var ChatterItems = require('./items/chatter.jsx');
 var GoogleItems = require('./items/google.jsx');
 
-var SALESFORCE = "salesforce";
-var CHATTER = "chatter";
-var GOOGLE = "google";
+var SALESFORCE = 'salesforce';
+var CHATTER = 'chatter';
+var GOOGLE = 'google';
+var DEFAULT_THEME = 'light';
+var DARK_THEME = 'dark';
 
 var App = React.createClass({
     getInitialState: function() {
         return {
             mode: this.props.initialMode,
-            domain: this.props.initialDomain
+            domain: this.props.initialDomain,
+            theme: this.props.initialTheme || DEFAULT_THEME
         };
     },
     handleModeChange: function(mode) {
@@ -32,6 +35,13 @@ var App = React.createClass({
         chrome.runtime.sendMessage({type: 'setDomain', domain: domain}, function() {
             this.setState({domain: domain});
         }.bind(this));
+    },
+    handleThemeChange: function() {
+        var theme = this.state.theme === DEFAULT_THEME ? DARK_THEME : DEFAULT_THEME;
+
+        chrome.runtime.sendMessage({type: 'setTheme', theme: theme});
+        this.setState({theme: theme});
+
     },
     handleSubmit: function(event, query) {
         event.preventDefault();
@@ -58,9 +68,12 @@ var App = React.createClass({
     render: function() {
         var wrapperClasses = cx({
             'wrapper': true,
-            'is-salesforce': this.state.mode === SALESFORCE,
-            'is-chatter': this.state.mode === CHATTER,
-            'is-google': this.state.mode === GOOGLE
+            'dark-theme': this.state.theme === DARK_THEME
+        });
+        var themeIconClasses = cx({
+            'fa': true,
+            'fa-moon-o': this.state.theme === DARK_THEME,
+            'fa-sun-o': this.state.theme === DEFAULT_THEME
         });
 
         var items;
@@ -81,6 +94,9 @@ var App = React.createClass({
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
                 {items}
                 </div>
+                <button className="ThemePicker skin-Button--noBorder" title="Change theme" onClick={this.handleThemeChange}>
+                    <span className={themeIconClasses}/>
+                </button>
             </div>
             );
     }
@@ -95,7 +111,9 @@ chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
         domain = response.domain;
     }
 
-    React.renderComponent(
-        <App initialDomain={domain} initialMode={mode}/>, document.body
-    );
+    chrome.runtime.sendMessage({type: "getTheme"}, function(theme) {
+        React.renderComponent(
+            <App initialDomain={domain} initialMode={mode} initialTheme={theme}/>, document.body
+        );
+    });
 });

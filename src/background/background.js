@@ -5,6 +5,7 @@ var Api = require("salesforce-api-using-access-token");
 
 var localStateMode = null;
 var localStateDomain = null;
+var localStateTheme = null;
 
 var recentsCache = null;
 var chatterCache = null;
@@ -94,6 +95,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 clearCache();
 
                 sendResponse();
+            });
+            return true;
+
+        case "setTheme":
+            Storage.setTheme(request.theme, function() {
+                sendResponse();
+            });
+            return true;
+
+        case "getTheme":
+            getTheme(function(err, theme) {
+                if (err) {
+                    return sendResponse(null);
+                }
+
+                return sendResponse(theme);
             });
             return true;
 
@@ -225,6 +242,21 @@ function getDomain(callback) {
         } else {
             localStateDomain = domain;
             return callback(null, domain);
+        }
+    });
+}
+
+function getTheme(callback) {
+    if (localStateTheme) {
+        return callback(null, localStateTheme);
+    }
+
+    Storage.getTheme(function(err, theme) {
+        if (err) {
+            return callback(err);
+        } else {
+            localStateTheme = theme;
+            return callback(null, theme);
         }
     });
 }

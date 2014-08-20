@@ -36,3 +36,19 @@ exports.getMode = function getMode(callback) {
 exports.setMode = function setMode(mode) {
     chrome.storage.sync.set({mode: mode});
 };
+
+exports.getTheme = function getTheme(callback) {
+    chrome.storage.local.get('theme', function (items) {
+        if (chrome.runtime.lastError) {
+            callback(new Error(chrome.runtime.lastError));
+        } else if (items && items.theme != null) {
+            callback(null, items.theme);
+        } else {
+            callback(new Error("Theme not found in chrome.storage.local"));
+        }
+    });
+};
+
+exports.setTheme = function setTheme(theme) {
+    chrome.storage.local.set({theme: theme});
+};

@@ -2,22 +2,11 @@ html, body {
     height: 100%;
     margin: 0;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #293f54;
+    color: #666;
 }
 
 .wrapper {
-     height: 100%;
-}
-.wrapper.is-salesforce {
-    /*background-color: #F0F1F2;*/
-    background-color: white;
-}
-.wrapper.is-chatter {
-    /*background-color: #CF5C60;*/
-    background-color: white;
-}
-.wrapper.is-google {
-    /*background-color: #F3AE4E;*/
+    height: 100%;
     background-color: white;
 }
 
@@ -30,25 +19,27 @@ html, body {
     /*margin: 20px;*/
 }
 
+.skin-Button--noBorder {
+    border: none;
+    font-size: inherit;
+    outline: none;
+    padding: 5px;
+    margin: 10px;
+    background: none;
+    cursor: pointer;
+
+    color: #ccc;
+}
+.skin-Button--noBorder:hover {
+    color: #666;
+}
+
 .AppMode {
     list-style: none;
     display: flex;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     -webkit-padding-start: 0;
-}
-
-.Authorize {
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    padding: 50px 0;
-    background-color: white;
-}
-
-.Authorize-button {
-    margin: 10px;
-    width: calc(50% - 20px);
 }
 
 .DomainPicker {
@@ -128,7 +119,6 @@ html, body {
 .is-google .GoTo-button:hover {
     color: #F3AE4E;
 }
-
 
 .Items {
     margin-top: 40px;
@@ -367,4 +357,59 @@ html, body {
     background: #F3AE4E;
 }
 
+/* ------ THEMES ------- */
 
+.wrapper.dark-theme {
+    background-color: #222;
+    color: #666;
+}
+
+.dark-theme input {
+    background-color: #222;
+    color: #ccc;
+}
+
+.dark-theme .skin-Button--noBorder {
+    color: #666;
+}
+.dark-theme .skin-Button--noBorder:hover {
+    color: #ccc;
+}
+
+
+.dark-theme .DomainPicker {
+    color: #666;
+}
+.dark-theme .DomainPicker-button:hover,
+.dark-theme .DomainPicker-button.is-active {
+    color: #ccc;
+}
+.dark-theme .DomainPicker-menuItem:hover .DomainPicker-menuItemText{
+    border-color: #ccc;
+}
+
+.dark-theme .GoTo-button {
+    color: #666;
+}
+
+.dark-theme .Item {
+    color: #ccc;
+    border-color: #666;
+}
+
+.dark-theme .Mode {
+    border-color: #666;
+    color: #666;
+}
+.dark-theme .Mode.is-active {
+    color: #aaa;
+}
+
+.dark-theme .Post {
+    color: #ccc;
+    border-color: #666;
+}
+.dark-theme .Post:hover {
+    color: #4EB1CB;
+    border-color: #4EB1CB;
+}
