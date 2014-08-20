@@ -21,15 +21,6 @@ exports.setDomain = function setDomain(domain, callback) {
     });
 };
 
-//exports.clearConnection = function(callback) {
-//    var connectionObj = {};
-//    connectionObj[CONNECTION_KEY] = null;
-//
-//    chrome.storage.sync.set(connectionObj, function() {
-//        return callback();
-//    });
-//};
-
 exports.getMode = function getMode(callback) {
     chrome.storage.sync.get('mode', function (items) {
         if (chrome.runtime.lastError) {

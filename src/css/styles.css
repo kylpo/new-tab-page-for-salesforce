@@ -51,6 +51,58 @@ html, body {
     width: calc(50% - 20px);
 }
 
+.DomainPicker {
+    float: right;
+    color: #ccc;
+    font-size: 14px;
+    text-align: right;
+}
+.DomainPicker-button {
+    color: inherit;
+    border: none;
+    font-size: inherit;
+    outline: none;
+    padding: 5px;
+    margin: 10px;
+    background: none;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+.DomainPicker-button:hover,
+.DomainPicker-button.is-active {
+    color: #666;
+}
+.DomainPicker-button.is-active:hover {
+    border-bottom: 1px solid;
+}
+.DomainPicker-button.is-alert {
+    color: #CF5C60;
+}
+.DomainPicker-menu {
+    visibility: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.DomainPicker-menu.is-open {
+    visibility: visible;
+}
+.DomainPicker-menuItem {
+    margin: 15px 10px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+}
+.DomainPicker-menuItem:first-child {
+    margin-top: 0;
+}
+.DomainPicker-menuItemText {
+    padding: 5px;
+}
+.DomainPicker-menuItem:hover .DomainPicker-menuItemText{
+
+    border-bottom: 1px solid #666;
+}
+
 .GoTo {
     text-align: center;
     margin-top: 40px;
@@ -58,10 +110,11 @@ html, body {
 .GoTo-button {
     color: #ccc;
     border: 1px solid;
-    font-size: 14px;
+    font-size: 16px;
     outline: none;
     padding: 5px;
-    background: none;
+    text-decoration: none;
+    display: inline-block;
 }
 .GoTo-button:hover {
     cursor: pointer;
@@ -147,20 +200,6 @@ html, body {
     font-size: 12px;
 }
 
-.Logout {
-    color: #ccc;
-    border: none;
-    font-size: 14px;
-    outline: none;
-    padding: 5px;
-    margin: 10px;
-    background: none;
-    float: right;
-}
-.Logout:hover {
-    cursor: pointer;
-    color: #CF5C60;
-}
 
 .Mode {
     flex-grow: 1;

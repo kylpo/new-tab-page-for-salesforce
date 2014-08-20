@@ -24,7 +24,6 @@ var SalesforceItems = React.createClass({
         }.bind(this));
     },
     render: function() {
-        console.log('here');
         var items = [];
         var goToButton = null;
 
@@ -131,7 +130,6 @@ var SalesforceItems = React.createClass({
         function imagePath(name) {
             return '../src/assets/img/' + name + '.svg';
         }
-
     }
 });
 

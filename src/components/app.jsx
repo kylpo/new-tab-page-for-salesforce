@@ -5,7 +5,7 @@
 var React = require("react/addons");
 var cx = React.addons.classSet;
 
-var DomainPicker = require('./domainpicker/domain-picker.jsx');
+var DomainPicker = require('./domain-picker.jsx');
 var AppModePicker = require('./app-mode-picker.jsx');
 var SearchBar = require('./search-bar.jsx');
 var SalesforceItems = require('./items/salesforce.jsx');
@@ -38,14 +38,12 @@ var App = React.createClass({
 
         var host = this._getHost();
 
-        if (this.state.mode === 'salesforce') {
+        if (this.state.mode === SALESFORCE) {
             window.location.href = host + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query);
-
-        } else if (this.state.mode === 'chatter') {
+        } else if (this.state.mode === CHATTER) {
             window.location.href = host + encodeURI('/_ui/search/ui/UnifiedSearchResults?str=' + query
                     + '#!/initialViewMode=feeds');
-
-        } else if (this.state.mode === 'google') {
+        } else if (this.state.mode === GOOGLE) {
             window.location.href = 'https://www.google.com/search?q=' + encodeURI(query);
         }
     },
@@ -75,12 +73,6 @@ var App = React.createClass({
             items = <GoogleItems/>;
         }
 
-//        var hostPicker;
-//
-//        if (this.state.domain != null) {
-//            hostPicker = <button className="Logout" onClick={this.handleLogout}>{this.state.domain}</button>;
-//        }
-//        {hostPicker}
         return (
             <div className={wrapperClasses}>
                 <DomainPicker domain={this.state.domain} handleDomainChange={this.handleDomainChange}/>

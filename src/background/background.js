@@ -4,13 +4,11 @@ var Storage = require("./storage.js");
 var Api = require("salesforce-api-using-access-token");
 
 var localStateMode = null;
-//var localStateConnection = null;
 var localStateDomain = null;
 
 var recentsCache = null;
 var chatterCache = null;
 var topSitesCache = null;
-
 var recentsCacheTimeout = null;
 var chatterCacheTimeout = null;
 var topSitesCacheTimeout = null;
