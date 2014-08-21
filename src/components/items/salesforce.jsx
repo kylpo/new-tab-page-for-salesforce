@@ -32,7 +32,7 @@ var SalesforceItems = React.createClass({
                 items.push(
                     <ListItem
                     key={item.Id}
-                    textTitle={item.Name || item.Title}
+                    textTitle={this._getName(item)}
                     textDescription={item.attributes.type}
                     url={this.props.host + '/' + item.Id}
                     iconUrl={this._getImageUrl(item.attributes.type)}
@@ -43,6 +43,7 @@ var SalesforceItems = React.createClass({
             }.bind(this));
         }
 
+        console.log(this.state.items);
         if (this.state.items === null) {
             var goToButton = <GoTo text="Log in to Salesforce" url={this.props.host + '/home/home.jsp'}/>;
         } else if (this.state.items !== undefined) {
@@ -56,6 +57,9 @@ var SalesforceItems = React.createClass({
             </div>
             );
 
+    },
+    _getName: function(item) {
+        return item.Name || item.Title || item.CaseNumber || item.SolutionName || item.ContractNumber;
     },
     _getImageUrl: function(type) {
         switch (type) {

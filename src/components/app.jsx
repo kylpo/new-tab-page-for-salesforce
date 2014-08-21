@@ -111,7 +111,6 @@ chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
     }
 
     chrome.runtime.sendMessage({type: "getTheme"}, function(theme) {
-        console.log(theme);
         React.renderComponent(<App initialDomain={domain} initialMode={mode} initialTheme={theme}/>, document.body);
     });
 });
