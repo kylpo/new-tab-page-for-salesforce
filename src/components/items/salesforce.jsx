@@ -129,7 +129,7 @@ var SalesforceItems = React.createClass({
         }
 
         function imagePath(name) {
-            return '../src/assets/img/' + name + '.svg';
+            return '../assets/img/' + name + '.svg';
         }
     }
 });
