@@ -35,10 +35,8 @@ var ChatterItems = React.createClass({
             }.bind(this));
         }
 
-        if (this.state.items === null) {
-            var goToButton = <GoTo text="Log in to Chatter" url={this.props.host + '/_ui/core/chatter/ui/ChatterPage'}/>;
-        } else if (this.state.items !== undefined) {
-            var goToButton = <GoTo text="Go to Chatter" url={this.props.host + '/_ui/core/chatter/ui/ChatterPage'}/>;
+        if (this.state.items !== undefined) {
+            goToButton = <GoTo target="Chatter" canGoTo={this.state.items != null} url={this.props.host + '/_ui/core/chatter/ui/ChatterPage'}/>;
         }
 
         return (

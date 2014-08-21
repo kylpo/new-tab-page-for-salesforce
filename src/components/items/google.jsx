@@ -47,7 +47,7 @@ var GoogleItems = React.createClass({
         }
 
         if (this.state.items !== undefined) {
-            var goToButton = <GoTo text="Go to Google" url='https://www.google.com'/>;
+            goToButton = <GoTo target="Google" canGoTo={true} url='https://www.google.com'/>;
         }
 
         return (
