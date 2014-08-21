@@ -1,19 +1,27 @@
 html, body {
     height: 100%;
+    width: 100%;
     margin: 0;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #666;
 }
 
+/*
+ * Needed to use absolute to enable scrolling within this wrapper, not the body.
+ * This is necessary to correctly show the dark theme when there is scrollable content below 100%
+ */
 .wrapper {
     height: 100%;
+    width: 100%;
     background-color: white;
+    position: absolute;
+    overflow-y: auto;
 }
 
-.centered {
+.content {
     margin: auto;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 48px; left: 0; bottom: 0; right: 0;
     max-height: 700px;
     max-width: 618px;
 }
@@ -53,9 +61,10 @@ html, body {
     font-size: inherit;
     outline: none;
     padding: 5px;
-    margin: 10px;
-    background: none;
+    margin: 10px 10px 0;
     cursor: pointer;
+
+    background: white;
     border-bottom: 1px solid transparent;
 }
 .DomainPicker-button:hover,
@@ -73,6 +82,10 @@ html, body {
     list-style: none;
     padding: 0;
     margin: 0;
+    position: absolute;
+    z-index: 1;
+
+    background: white;
 }
 .DomainPicker-menu.is-open {
     visibility: visible;
@@ -82,9 +95,9 @@ html, body {
     border-bottom: 1px solid transparent;
     cursor: pointer;
 }
-.DomainPicker-menuItem:first-child {
-    margin-top: 0;
-}
+/*.DomainPicker-menuItem:first-child {*/
+    /*margin-top: 0;*/
+/*}*/
 .DomainPicker-menuItemText {
     padding: 5px;
 }
@@ -375,9 +388,15 @@ html, body {
 .dark-theme .DomainPicker {
     color: #666;
 }
+.dark-theme .DomainPicker-button {
+    background: #222;
+}
 .dark-theme .DomainPicker-button:hover,
 .dark-theme .DomainPicker-button.is-active {
     color: #ccc;
+}
+.dark-theme .DomainPicker-menu {
+    background: #222;
 }
 .dark-theme .DomainPicker-menuItem:hover .DomainPicker-menuItemText{
     border-color: #ccc;

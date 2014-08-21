@@ -84,11 +84,14 @@ var App = React.createClass({
 
         return (
             <div className={wrapperClasses}>
-                <DomainPicker domain={this.state.domain} handleDomainChange={this.handleDomainChange}/>
-                <button className="ThemePicker skin-Button--noBorder" title="Change theme" onClick={this.handleThemeChange}>
-                    <span className={themeIconClasses}/>
-                </button>
-                <div className="centered">
+                <div className="header">
+                    <button className="ThemePicker skin-Button--noBorder" title="Change theme" onClick={this.handleThemeChange}>
+                        <span className={themeIconClasses}/>
+                    </button>
+                    <DomainPicker domain={this.state.domain} handleDomainChange={this.handleDomainChange}/>
+                </div>
+
+                <div className="content">
                     <AppModePicker mode={this.state.mode} onClick={this.handleModeChange}/>
                     <SearchBar mode={this.state.mode} onSubmit={this.handleSubmit}/>
                 {items}
@@ -109,8 +112,6 @@ chrome.runtime.sendMessage({type: "getAppState"}, function(response) {
 
     chrome.runtime.sendMessage({type: "getTheme"}, function(theme) {
         console.log(theme);
-        React.renderComponent(
-            <App initialDomain={domain} initialMode={mode} initialTheme={theme}/>, document.body
-        );
+        React.renderComponent(<App initialDomain={domain} initialMode={mode} initialTheme={theme}/>, document.body);
     });
 });
