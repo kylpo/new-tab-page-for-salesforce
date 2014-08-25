@@ -5,6 +5,13 @@
 var React = require("react");
 
 var PostItem = React.createClass({
+    componentDidMount: function() {
+        emojify.setConfig({
+            img_dir: 'assets/img/emoji'
+        });
+
+        emojify.run(this.getDOMNode());
+    },
     render: function() {
         var post = this.props.post;
 
