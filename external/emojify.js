@@ -29,29 +29,29 @@
 
             /* List of emoticons used in the regular expression */
             var emoticons = {
-     /* :..: */ named: /:([a-z0-9A-Z_-]+):/,
-     /* :-)  */ blush: /:-?\)/g,
-     /* :-o  */ scream: /:-o/gi,
-     /* :-]  */ smirk: /[:;]-?]/g,
-     /* :-D  */ smiley: /[:;]-?d/gi,
-     /* X-D  */ stuck_out_tongue_closed_eyes: /x-d/gi,
-     /* ;-p  */ stuck_out_tongue_winking_eye: /[:;]-?p/gi,
-     /* :-[  */ rage: /:-?[\[@]/g,
-     /* :-(  */ disappointed: /:-?\(/g,
-     /* :'-( */ sob: /:['’]-?\(|:&#x27;\(/g,
-     /* :-*  */ kissing_heart: /:-?\*/g,
-     /* ;-)  */ wink: /;-?\)/g,
-     /* :-/  */ pensive: /:-?\//g,
-     /* :-s  */ confounded: /:-?s/gi,
-     /* :-|  */ flushed: /:-?\|/g,
-     /* :-$  */ relaxed: /:-?\$/g,
-     /* :-x  */ mask: /:-x/gi,
-     /* <3   */ heart: /<3|&lt;3/g,
-     /* </3  */ broken_heart: /<\/3|&lt;&#x2F;3/g,
-     /* :+1: */ thumbsup: /:\+1:/g,
-     /* :-1: */ thumbsdown: /:\-1:/g
+                /* :..: */ named: /:([a-z0-9A-Z_-]+):/,
+                /* :-)  */ grinning: /:-?\)/g,
+                /* :-o  */ scream: /:-o/gi,
+                /* :-]  */ smirk: /[:;]-?]/g,
+                /* :-D  */ smile: /[:;]-?d/gi,
+                /* X-D  */ stuck_out_tongue_closed_eyes: /x-d/gi,
+                /* :-p  */ stuck_out_tongue: /:-?p/gi,
+                /* ;-p  */ stuck_out_tongue_winking_eye: /;-?p/gi,
+                /* :-[  */ rage: /:-?[\[@]/g,
+                /* :-(  */ disappointed: /:-?\(/g,
+                /* :'-( */ sob: /:['’]-?\(|:&#x27;\(/g,
+                /* :-*  */ kissing_heart: /:-?\*/g,
+                /* ;-)  */ wink: /;-?\)/g,
+                /* :-/  */ confused: /:-?\//g,
+                /* :-s  */ confounded: /:-?s/gi,
+                /* :-|  */ neutral_face: /:-?\|/g,
+                /* :-$  */ relaxed: /:-?\$/g,
+                /* :-x  */ mask: /:-x/gi,
+                /* <3   */ heart: /<3|&lt;3/g,
+                /* </3  */ broken_heart: /<\/3|&lt;&#x2F;3/g,
+                /* :+1: */ thumbsup: /:\+1:/g,
+                /* :-1: */ thumbsdown: /:\-1:/g
             };
-
 
             var emoticonsProcessed = Object.keys(emoticons).map(function(key) {
                 return [emoticons[key], key];
