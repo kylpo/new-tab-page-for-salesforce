@@ -1,7 +1,7 @@
 {
     "name": "New Tab Page for Salesforce",
     "description": "Search and access Salesforce and Chatter resources from your New Tab Page!",
-    "version": "0.1.3",
+    "version": "0.1.5",
     "background": {
         "scripts": ["./build/background.js"]
     },
@@ -15,5 +15,10 @@
         "topSites",
         "storage"
     ],
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
     "manifest_version": 2
 }
