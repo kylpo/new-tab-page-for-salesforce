@@ -96,9 +96,6 @@ html, body {
     border-bottom: 1px solid transparent;
     cursor: pointer;
 }
-/*.DomainPicker-menuItem:first-child {*/
-    /*margin-top: 0;*/
-/*}*/
 .DomainPicker-menuItemText {
     padding: 5px;
 }

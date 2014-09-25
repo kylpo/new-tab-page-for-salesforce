@@ -15,7 +15,7 @@ var SearchBar = React.createClass({
             value: ""
         }
     },
-    handleChange: function(e) {
+    handleChange: function() {
         this.setState({value: event.target.value});
     },
     handleSubmit: function(e) {

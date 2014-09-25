@@ -144,6 +144,13 @@ function clearCache() {
     topSitesCacheTimeout = null;
 }
 
+/**
+ * First check cache for items
+ * If nothing in cache, try API
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns items in callback or an error callback
+ */
 function getSalesforceItems(callback) {
     if (recentsCache) {
         return callback(null, recentsCache);
@@ -169,6 +176,13 @@ function getSalesforceItems(callback) {
     });
 }
 
+/**
+ * First check cache for items
+ * If nothing in cache, try API
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns items in callback or an error callback
+ */
 function getChatterItems(callback) {
     if (chatterCache) {
         return callback(null, chatterCache);
@@ -194,6 +208,13 @@ function getChatterItems(callback) {
     });
 }
 
+/**
+ * First check cache for items
+ * If nothing in cache, try API
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns items in callback or an error callback
+ */
 function getGoogleItems(callback) {
     if (topSitesCache) {
         return callback(null, topSitesCache);
@@ -211,8 +232,9 @@ function getGoogleItems(callback) {
 }
 
 /**
- * First check if connection exist in state
- * Then check if connection exist in storage
+ * First get domain
+ * Then get cookies and find matched domain
+ * If match found, return connection object
  *
  * @param {function(Object, Object=)} callback
  * @returns connection in callback or an error callback
@@ -235,6 +257,13 @@ function getConnection(callback) {
 
 }
 
+/**
+ * First check if domain exists in state
+ * Then check if domain exists in storage
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns domain in callback or an error callback
+ */
 function getDomain(callback) {
     if (localStateDomain) {
         return callback(null, localStateDomain);
@@ -250,6 +279,13 @@ function getDomain(callback) {
     });
 }
 
+/**
+ * First check if theme exists in state
+ * Then check if theme exists in storage
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns theme in callback or an error callback
+ */
 function getTheme(callback) {
     if (localStateTheme) {
         return callback(null, localStateTheme);
@@ -266,13 +302,11 @@ function getTheme(callback) {
 }
 
 /**
- * First check if actions exist in state
- * Then check if actions exist in storage
- * - if taken from storage, filter actions
- * Then finally try to get (and store) actions from server
+ * First check if mode exists in state
+ * Then check if mode exists in storage
  *
  * @param {function(Object, Object=)} callback
- * @returns actions in callback or an error callback
+ * @returns mode in callback or an error callback
  */
 function getMode(callback) {
     if (localStateMode) {
