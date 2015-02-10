@@ -1,6 +1,8 @@
 New Tab Page for Salesforce
 =======================
 
+![New Tab Page for Salesforce](https://lh4.googleusercontent.com/hgKqC13cow7RB8AV14aX8DyDFLFwz4_NkCcUBsUZSZsqBTQJwj9lNFAVrZ2H2IqKQKQgH5qS5A=s1280-h800-e365-rw "New Tab Page for Salesforce")
+
 ###Search and access Salesforce and Chatter resources from your New Tab Page!
 
 [New Tab Page for Salesforce](https://chrome.google.com/webstore/detail/new-tab-page-for-salesfor/bdkpbeeciefhcpfalplbnnfdkijejbmj?hl=en-US&utm_source=chrome-ntp-launcher) on the Chrome Web Store
