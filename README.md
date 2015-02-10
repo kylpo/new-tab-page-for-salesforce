@@ -14,10 +14,13 @@ Don't worry if you currently use the Google search bar and Top Sites of the defa
 **Note: this is NOT an official Salesforce project. Salesforce is not responsible for this extension.**
 
 ![New Tab Page - Chatter](https://lh6.googleusercontent.com/keXjzajKLnKMYjVpjv_5c7P_rVzy1KPyMWM84S5g-1xHoOSxGv9AAsQLcMYEWAY2qt1Ic-VrXkM=s1280-h800-e365-rw "New Tab Page - Chatter")
+-------------
 
 ![New Tab Page - Google](https://lh3.googleusercontent.com/v6Cu6chbZVvB3wHWEMHC5t4OZpbY-Uh5RO8szixeqWuDJ2hqz7h3AIB_8k36ogrrFEFZ79ys=s1280-h800-e365-rw "New Tab Page - Google")
+-------------
 
 ![New Tab Page for Salesforce - dark](https://lh4.googleusercontent.com/6koiaQX7zUVg1k_raH_1dL7_e4mYT4qaLTXXDrZH6CEtvJKEWJ9ZnaCT26zUSm2L4uS5mAoU=s1280-h800-e365-rw "New Tab Page for Salesforce - dark")
+-------------
 
 ## Dev Notes
 1. `npm install`
